@@ -1,3 +1,3 @@
-#include "archivos.h"
+#include "gimnasio.h"
 
 using namespace std;
