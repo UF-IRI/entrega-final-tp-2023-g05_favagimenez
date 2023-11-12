@@ -5,5 +5,9 @@
 */
 int main(int argc, char *argv[]) {
     // "../gngng/
+    int cantidadClientes;
+    Cliente* listaClientes = guardarCliente("iriClientesGYM.csv", cantidadClientes);
+    delete[] listaClientes;
+
     return 0;
 }

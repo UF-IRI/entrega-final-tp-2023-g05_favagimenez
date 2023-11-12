@@ -3,7 +3,75 @@
 
 using namespace std;
 
-void registrarCliente(Gimnasio& gym) {
+void registrarCliente(Cliente*& listaClientes, int& N,  Cliente& nuevoCliente) {
+    Cliente* aux = new Cliente[N+1];
+
+    for (int i = 0; i < N; i++) {
+        aux[i] = listaClientes[i];
+    }
+    aux[N++] = nuevoCliente;
+    delete[] listaClientes;
+    listaClientes = aux;
+}
+
+Cliente* guardarCliente(string& archivo, int& cantidadClientes) {
+    Cliente* listaClientes = nullptr;
+    cantidadClientes = 0;
+    ifstream infile(archivo);
+    if (!infile.is_open()) {
+        cout << "Error al leer archivo";
+        return;
+    }
+    string line;
+    char coma = ',';
+    getline(infile, line);
+    while (getline(infile, line)) {
+        stringstream ss(line);
+        Cliente nuevoCliente;
+        getline(ss, nuevoCliente.nombre, coma);
+        getline(ss, nuevoCliente.apellido, coma);
+        getline(ss, nuevoCliente.dni, coma);
+        getline(ss, nuevoCliente.email, coma);
+        getline(ss, nuevoCliente.numero_telefono);
+        registrarCliente(listaClientes, cantidadClientes, nuevoCliente);
+    }
+    infile.close();
+    return listaClientes;
+}
+tm* obtenerFechaHora(string cadena)
+{
+    tm* ltm = new tm;
+    int i = 0;
+    int j = 0;
+    string dia, mes, anio, hora, minuto = "";
+    while (i < cadena.length()) {
+        char aux = cadena[i];
+        if (aux != '/' && aux != ' ' && aux != ':') {
+            if (j == 0)
+                dia += aux;
+            else if (j == 1)
+                mes += aux;
+            else if (j == 2)
+                anio += aux;
+            else if (j == 3)
+                hora += aux;
+            else if (j == 4)
+                minuto += aux;
+        }
+        else {
+            j++;
+        }
+        i++;
+    }
+    ltm->tm_year = stoi(anio) - 1900;
+    ltm->tm_mday =stoi(dia);
+    ltm->tm_mon =stoi(mes) - 1;
+    ltm->tm_hour =stoi(hora);
+    ltm->tm_min = stoi(minuto);
+    return ltm;
+}
+
+/*
     Cliente nuevoCliente;
     cout << "Ingrese el nombre del cliente: ";
     cin >> nuevoCliente.nombre;
@@ -22,8 +90,8 @@ void registrarCliente(Gimnasio& gym) {
 
     cout << "Cliente registrado" << endl;
 }
-
-/*bool existeSuperposicion(Cliente* cliente, string& claseAReservar){
+ *
+ * bool existeSuperposicion(Cliente* cliente, string& claseAReservar){
     // Recorre las clases ya reservadas por el cliente
     for (int i = 0; i < Cliente.turnos; ++i) {
         // Comprueba si la clase a reservar tiene superposición con alguna clase ya reservada
