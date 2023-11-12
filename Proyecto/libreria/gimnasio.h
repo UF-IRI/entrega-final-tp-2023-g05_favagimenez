@@ -5,11 +5,11 @@
 using namespace std;
 struct Clases {
     string Nombre_clase;
-    string Hora_inicio;
-    int cupoActual;
+    string sala;
+    int horarios[6][6];
+    int cupo;
     int cupoMax;
 };
-
 struct Musculacion {
     string nombre;
     int cupoMax = 30;

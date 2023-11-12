@@ -6,8 +6,11 @@
 int main(int argc, char *argv[]) {
     // "../gngng/
     int cantidadClientes;
+    int cantidadClases;
     Cliente* listaClientes = guardarCliente("iriClientesGYM.csv", cantidadClientes);
     delete[] listaClientes;
-
+    int cantidadClases;
+    Clases* listaClases = cargarClases("iriClasesGYM", cantidadClases);
+    delete[] listaClases;
     return 0;
 }

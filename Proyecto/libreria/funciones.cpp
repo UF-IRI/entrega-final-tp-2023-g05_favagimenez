@@ -13,7 +13,32 @@ void registrarCliente(Cliente*& listaClientes, int& N,  Cliente& nuevoCliente) {
     delete[] listaClientes;
     listaClientes = aux;
 }
-
+Clases* cargarClases(string& archivo, int& cantidadClases) {
+    int MAX_CLASES = 6;
+    Clases* listaClases = new Clases[MAX_CLASES];
+    cantidadClases = 0;
+    ifstream infile(archivo);
+    if (!infile.is_open()) {
+        std::cout << "Error al leer archivo";
+        return nullptr;
+    }
+    string line;
+    getline(infile, line);//////
+    while (cantidadClases < MAX_CLASES && getline(infile, line)) {
+        stringstream ss(line);
+        ss >> listaClases[cantidadClases].Nombre_clase >> listaClases[cantidadClases].sala;
+        for (int j = 0; j < 6; ++j) {
+            for (int k = 0; k < 6; ++k) {
+                ss >> listaClases[cantidadClases].horarios[j][k];
+            }
+        }
+        ss >> listaClases[cantidadClases].cupoMax;
+        listaClases[cantidadClases].cupo = 0;
+        cantidadClases++;
+    }
+    infile.close();
+    return listaClases;
+}
 Cliente* guardarCliente(string& archivo, int& cantidadClientes) {
     Cliente* listaClientes = nullptr;
     cantidadClientes = 0;
@@ -43,19 +68,19 @@ tm* obtenerFechaHora(string cadena)
     tm* ltm = new tm;
     int i = 0;
     int j = 0;
-    string dia, mes, anio, hora, minuto = "";
-    while (i < cadena.length()) {
+    string dia, mes, anio, hora, minuto = " ";
+    while (i<cadena.length()) {
         char aux = cadena[i];
-        if (aux != '/' && aux != ' ' && aux != ':') {
-            if (j == 0)
+        if (aux !='/'&&aux != ' '&&aux!=':') {
+            if (j==0)
                 dia += aux;
-            else if (j == 1)
+            else if (j==1)
                 mes += aux;
-            else if (j == 2)
+            else if (j==2)
                 anio += aux;
-            else if (j == 3)
+            else if (j==3)
                 hora += aux;
-            else if (j == 4)
+            else if (j==4)
                 minuto += aux;
         }
         else {
