@@ -3,16 +3,99 @@
 
 using namespace std;
 
-void registrarCliente(Cliente*& listaClientes, int& N,  Cliente& nuevoCliente) {
-    Cliente* aux = new Cliente[N+1];
-
-    for (int i = 0; i < N; i++) {
+void registrarCliente(Cliente*& listaClientes, int *tamactual,  Cliente nuevoCliente) {
+    *tamactual=*tamactual+1;
+    Cliente* aux = new Cliente[*tamactual];
+    int i=0;
+    while (i < *tamactual - 1 && *tamactual - 1 != 0) {
         aux[i] = listaClientes[i];
+        i++;
     }
-    aux[N++] = nuevoCliente;
+    aux[i] = nuevoCliente;
     delete[] listaClientes;
     listaClientes = aux;
 }
+void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual){
+    *tamactual=*tamactual+1;
+    int i=0;
+    Clases*aux=new Clases[*tamactual];
+    while(i<*tamactual-1&&*tamactual-1!=0){
+        aux[i]=lista_clases[i];
+        i++;
+    }
+    aux[i]=clase;
+    delete[]lista_clases;
+    lista_clases=aux;
+
+}
+void resize(Cliente*& clientes, unsigned int& tamC){
+    if(clientes==nullptr){
+        if(tam<=0){
+            clientes = new Cliente[++tam];
+        }
+        return;
+    }
+
+    Cliente* temporal = new Cliente[++tam];
+
+    for(unsigned int i = 0; i < tam-1; i++)
+        temporal[i] = clientes[i];
+
+    delete[] clientes;
+
+    clientes = temporal;
+}
+void read_archivo_clientes(ifstream &archi, Cliente *&clientes, unsigned int *tamC){
+    string linea;
+    stringstream ss;
+
+    if (archi.is_open()) {
+        getline(archi, linea); // Leer encabezado, si es necesario
+
+        while (getline(archi, linea)) {
+            ss.clear();
+            ss << linea;
+
+            // Incrementar el tamaño del arreglo de clientes
+            resize(clientes, tamC);
+
+            // Leer los campos y asignarlos a la estructura Cliente
+            ss >> clientes[tamC - 1].idCliente;
+            ss.ignore(); // Ignorar la coma
+            getline(ss, clientes[tamC - 1].nombre, ',');
+            getline(ss, clientes[tamC - 1].apellido, ',');              //VER
+            getline(ss, clientes[tamC - 1].email, ',');
+            getline(ss, clientes[tamC - 1].telefono, ',');
+            ss >> clientes[tamC - 1].fechaNac;
+            ss.ignore(); // Ignorar la coma
+            ss >> clientes[tamC - 1].estado;
+        }
+    }
+}
+sAsistencia*leerArchivoBinario(string nombreArchivo, int* cantAsistencias){
+    ifstream archibinrd(nombreArchivo, ios::binary);
+
+    if (!archibinrd.is_open()) {
+       cout << "Error al abrir el archivo para lectura." <<endl;
+        return nullptr;
+    }
+     sAsistencia* asistencias = new sAsistencia[*cantAsistencias];
+
+    for (int i = 0; i < *cantAsistencias; ++i) {
+        archibinrd.read((char*)asistencias[i].idCliente, sizeof(unsigned int));
+        archibinrd.read((char*)asistencias[i].cantInscriptos, sizeof(unsigned int));
+
+        asistencias[i].CursosInscriptos = new Inscripcion[asistencias[i].cantInscriptos];
+
+        archibinrd.read((char*)asistencias[i].CursosInscriptos,
+                        sizeof(Inscripcion) * asistencias[i].cantInscriptos);
+    }
+
+    archibinrd.close();
+
+    return asistencias;
+}
+/*
 Clases* cargarClases(string& archivo, int& cantidadClases) {
     int MAX_CLASES = 6;
     Clases* listaClases = new Clases[MAX_CLASES];
@@ -38,8 +121,8 @@ Clases* cargarClases(string& archivo, int& cantidadClases) {
     }
     infile.close();
     return listaClases;
-}
-Cliente* guardarCliente(string& archivo, int& cantidadClientes) {
+}*/
+/*Cliente* guardarCliente(string& archivo, int& cantidadClientes) {
     Cliente* listaClientes = nullptr;
     cantidadClientes = 0;
     ifstream infile(archivo);
@@ -62,7 +145,7 @@ Cliente* guardarCliente(string& archivo, int& cantidadClientes) {
     }
     infile.close();
     return listaClientes;
-}
+}*/
 tm* obtenerFechaHora(string cadena)
 {
     tm* ltm = new tm;

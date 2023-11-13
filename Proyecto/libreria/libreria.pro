@@ -9,12 +9,10 @@ CONFIG += c++17
 
 SOURCES += \
     funciones.cpp \
-    gimnasio.cpp \
     libreria.cpp
 
 HEADERS += \
     funciones.h \
-    gimnasio.h \
     libreria_global.h \
     libreria.h
 
