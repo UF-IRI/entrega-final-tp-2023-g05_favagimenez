@@ -28,23 +28,7 @@ void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual){
     lista_clases=aux;
 
 }
-void resize(Cliente*& clientes, unsigned int& tamC){
-    if(clientes==nullptr){
-        if(tam<=0){
-            clientes = new Cliente[++tam];
-        }
-        return;
-    }
-
-    Cliente* temporal = new Cliente[++tam];
-
-    for(unsigned int i = 0; i < tam-1; i++)
-        temporal[i] = clientes[i];
-
-    delete[] clientes;
-
-    clientes = temporal;
-}
+/*
 void read_archivo_clientes(ifstream &archi, Cliente *&clientes, unsigned int *tamC){
     string linea;
     stringstream ss;
@@ -72,7 +56,26 @@ void read_archivo_clientes(ifstream &archi, Cliente *&clientes, unsigned int *ta
         }
     }
 }
-sAsistencia*leerArchivoBinario(string nombreArchivo, int* cantAsistencias){
+*/
+void leerAsistencias(string& archibinrd) {
+   ifstream f(archibinrd, ios::binary);
+
+    if (f.is_open()) {
+        sAsistencia asistencia;
+        while (f.read((char*)&asistencia, sizeof(sAsistencia))) {
+            cout << "ID del cliente: " << asistencia.idCliente << endl;
+            cout << "Cantidad de cursos a los que se inscribió: "
+                      << asistencia.cantInscriptos << endl;
+            for (int i = 0; i < asistencia.cantInscriptos; i++) {
+                cout << "ID clase: " << asistencia.CursosInscriptos[i].idClase<< endl;
+                cout << "Fecha de inscripcion: "<< asistencia.CursosInscriptos[i].fechaInscripcion << endl;
+            }
+        }
+    }
+
+    f.close();
+}
+/*sAsistencia*leerArchivoBinario(string nombreArchivo, int* cantAsistencias){
     ifstream archibinrd(nombreArchivo, ios::binary);
 
     if (!archibinrd.is_open()) {
@@ -95,7 +98,7 @@ sAsistencia*leerArchivoBinario(string nombreArchivo, int* cantAsistencias){
 
     return asistencias;
 }
-/*
+*
 Clases* cargarClases(string& archivo, int& cantidadClases) {
     int MAX_CLASES = 6;
     Clases* listaClases = new Clases[MAX_CLASES];
@@ -122,30 +125,33 @@ Clases* cargarClases(string& archivo, int& cantidadClases) {
     infile.close();
     return listaClases;
 }*/
-/*Cliente* guardarCliente(string& archivo, int& cantidadClientes) {
+Cliente* guardarCliente(string& archivo, int* cantidadClientes) {
     Cliente* listaClientes = nullptr;
-    cantidadClientes = 0;
-    ifstream infile(archivo);
+    cantidadClientes = nullptr;
+    ifstream infile("iriClientesGYM.csv");
     if (!infile.is_open()) {
         cout << "Error al leer archivo";
-        return;
+        return nullptr;
     }
     string line;
     char coma = ',';
     getline(infile, line);
     while (getline(infile, line)) {
-        stringstream ss(line);
+        stringstream ss;
         Cliente nuevoCliente;
+        ss>>nuevoCliente.idCliente;
         getline(ss, nuevoCliente.nombre, coma);
         getline(ss, nuevoCliente.apellido, coma);
-        getline(ss, nuevoCliente.dni, coma);
         getline(ss, nuevoCliente.email, coma);
-        getline(ss, nuevoCliente.numero_telefono);
+        getline(ss, nuevoCliente.telefono);
+        /*getline(ss, nuevoCliente.fechaNac, coma);*/
+        ss>>nuevoCliente.estado;
         registrarCliente(listaClientes, cantidadClientes, nuevoCliente);
+        cantidadClientes++;
     }
     infile.close();
     return listaClientes;
-}*/
+}
 tm* obtenerFechaHora(string cadena)
 {
     tm* ltm = new tm;
