@@ -57,25 +57,8 @@ void read_archivo_clientes(ifstream &archi, Cliente *&clientes, unsigned int *ta
     }
 }
 */
-void leerAsistencias(string& archibinrd) {
-   ifstream f(archibinrd, ios::binary);
 
-    if (f.is_open()) {
-        sAsistencia asistencia;
-        while (f.read((char*)&asistencia, sizeof(sAsistencia))) {
-            cout << "ID del cliente: " << asistencia.idCliente << endl;
-            cout << "Cantidad de cursos a los que se inscribió: "
-                      << asistencia.cantInscriptos << endl;
-            for (int i = 0; i < asistencia.cantInscriptos; i++) {
-                cout << "ID clase: " << asistencia.CursosInscriptos[i].idClase<< endl;
-                cout << "Fecha de inscripcion: "<< asistencia.CursosInscriptos[i].fechaInscripcion << endl;
-            }
-        }
-    }
-
-    f.close();
-}
-/*sAsistencia*leerArchivoBinario(string nombreArchivo, int* cantAsistencias){
+sAsistencia*leerArchivoBinario(string nombreArchivo, int* cantAsistencias){
     ifstream archibinrd(nombreArchivo, ios::binary);
 
     if (!archibinrd.is_open()) {
@@ -98,7 +81,7 @@ void leerAsistencias(string& archibinrd) {
 
     return asistencias;
 }
-*
+/*
 Clases* cargarClases(string& archivo, int& cantidadClases) {
     int MAX_CLASES = 6;
     Clases* listaClases = new Clases[MAX_CLASES];
