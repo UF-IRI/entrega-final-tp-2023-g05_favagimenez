@@ -14,6 +14,8 @@ struct Clases {
     int cupo;
     int cupoMax;
 };
+
+
 struct Cliente {
     unsigned int idCliente;
     string nombre;
@@ -51,7 +53,7 @@ void read_archivo_clientes(ifstream &archi, Cliente*&clientes, unsigned int*tamC
 Clases*read_archivo_clases(string a1, int*contador);
 Cliente* guardarCliente(string& archivo, int* cantidadClientes);
 tm* obtenerFechaHora(string cadena);
-void leerAsistencias(string archibinrd);
+void leerAsistencias(string& archibinrd);
 sAsistencia*leerArchivoBinario(string nombreArchivo, int*cantAsistencia);
 /*void registrarCliente(Gimnasio& gym);
 bool existeSuperposicion(Clases* clase, string& claseAReservar);
