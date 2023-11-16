@@ -10,6 +10,35 @@ int main() {
    string rutaArchivoClases = "../Proyecto/iriClasesGYM.csv";
     string rutaArchivoClientes = "../Proyecto/iriClientesGYM.csv";
     string rutaArchivoAsistencias = "../Proyecto/asistencias_1697673600000.dat";
+
+
+    return 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //  leerAsistencias(archibinrd);
    /*int cantAsistencias;
     sAsistencia* asistencias = leerArchivoBinario("asistencias_1697673600000.dat", &cantAsistencias);
@@ -52,6 +81,5 @@ int main() {
     } else {
         cout << "No se pudo abrir el archivo CSV" << std::endl;
     }*/
-    cout << "Hola mundo!"<<endl;
-    return 0;
+
 }
