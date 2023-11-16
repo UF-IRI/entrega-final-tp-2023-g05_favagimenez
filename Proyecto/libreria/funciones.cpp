@@ -147,30 +147,5 @@ bool existeSuperposicion(Clases* clase, int numClases, string& claseAReservar, f
     }
     return false;
 }
-/*
- * /*sAsistencia*leerArchivoBinario(string nombreArchivo, int* cantAsistencias){
-    ifstream archibinrd(nombreArchivo, ios::binary);
 
-    if (!archibinrd.is_open()) {
-       cout << "Error al abrir el archivo para lectura." <<endl;
-        return nullptr;
-    }
-     sAsistencia* asistencias = new sAsistencia[*cantAsistencias];
-
-    for (int i = 0; i < *cantAsistencias; ++i) {
-        archibinrd.read((char*)asistencias[i].idCliente, sizeof(unsigned int));
-        archibinrd.read((char*)asistencias[i].cantInscriptos, sizeof(unsigned int));
-
-        asistencias[i].CursosInscriptos = new Inscripcion[asistencias[i].cantInscriptos];
-
-        archibinrd.read((char*)asistencias[i].CursosInscriptos,
-                        sizeof(Inscripcion) * asistencias[i].cantInscriptos);
-    }
-
-    archibinrd.close();
-
-    return asistencias;
-}
-
-*/
 

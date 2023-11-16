@@ -9,7 +9,6 @@ using namespace std;
 struct Clases {
     unsigned idClase;
     string nombre;
-  //  string sala;
     float horario;
     int cupo;
     int cupoMax;
