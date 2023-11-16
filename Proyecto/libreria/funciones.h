@@ -22,7 +22,7 @@ struct Cliente {
     string apellido;
     string email;
     string telefono;
-    char fechaNac;
+    string fechaNac;
     int estado;
     Clases turnos;
 };

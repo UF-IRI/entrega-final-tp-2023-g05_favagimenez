@@ -46,8 +46,8 @@ void leerAsistencias(string& archibinrd) {
     f.close();
 }
 Clases* leerClase(string& archivo, int* cantidadClases) {
- Clases* listaClases = nullptr;
-    Clases* listaClases ;
+
+    Clases* listaClases;
     ifstream infile("iriClasesGYM.csv");
     if (!infile.is_open()) {
         cout << "Error al leer archivo de clientes";
@@ -66,7 +66,7 @@ Clases* leerClase(string& archivo, int* cantidadClases) {
         cantidadClases++;
     }
     infile.close();
-    return listaClases;
+    return listaClases;
 }
 Cliente* guardarCliente(string& archivo, int* cantidadClientes) {
     Cliente* listaClientes = nullptr;
@@ -171,79 +171,6 @@ bool existeSuperposicion(Clases* clase, int numClases, string& claseAReservar, f
 
     return asistencias;
 }
-*
-Clases* cargarClases(string& archivo, int& cantidadClases) {
-    int MAX_CLASES = 6;
-    Clases* listaClases = new Clases[MAX_CLASES];
-    cantidadClases = 0;
-    ifstream infile(archivo);
-    if (!infile.is_open()) {
-        std::cout << "Error al leer archivo";
-        return nullptr;
-    }
-    string line;
-    getline(infile, line);//////
-    while (cantidadClases < MAX_CLASES && getline(infile, line)) {
-        stringstream ss(line);
-        ss >> listaClases[cantidadClases].Nombre_clase >> listaClases[cantidadClases].sala;
-        for (int j = 0; j < 6; ++j) {
-            for (int k = 0; k < 6; ++k) {
-                ss >> listaClases[cantidadClases].horarios[j][k];
-            }
-        }
-        ss >> listaClases[cantidadClases].cupoMax;
-        listaClases[cantidadClases].cupo = 0;
-        cantidadClases++;
-    }
-    infile.close();
-    return listaClases;
-}*
-    Cliente nuevoCliente;
-    cout << "Ingrese el nombre del cliente: ";
-    cin >> nuevoCliente.nombre;
-    cout << "Ingrese el apellido: ";
-    cin >> nuevoCliente.apellido;
-    cout << "Ingrese el dni: ";
-    cin >> nuevoCliente.dni;
-    cout << "Ingrese el email del cliente: ";
-    cin >> nuevoCliente.email;
-    cout << "Ingrese el numero de telefono del cliente: ";
-    cin >> nuevoCliente.numero_telefono;
 
-    //gym.listaDeClientes
-
-    // Hay que agregar el nuevo cliente a la lista de clientes pero tengo dudas asi que fijate si te sale jeje
-
-    cout << "Cliente registrado" << endl;
-}
- *
-/*
-void read_archivo_clientes(ifstream &archi, Cliente *&clientes, unsigned int *tamC){
-    string linea;
-    stringstream ss;
-
-    if (archi.is_open()) {
-        getline(archi, linea); // Leer encabezado, si es necesario
-
-        while (getline(archi, linea)) {
-            ss.clear();
-            ss << linea;
-
-            // Incrementar el tamaño del arreglo de clientes
-            resize(clientes, tamC);
-
-            // Leer los campos y asignarlos a la estructura Cliente
-            ss >> clientes[tamC - 1].idCliente;
-            ss.ignore(); // Ignorar la coma
-            getline(ss, clientes[tamC - 1].nombre, ',');
-            getline(ss, clientes[tamC - 1].apellido, ',');              //VER
-            getline(ss, clientes[tamC - 1].email, ',');
-            getline(ss, clientes[tamC - 1].telefono, ',');
-            ss >> clientes[tamC - 1].fechaNac;
-            ss.ignore(); // Ignorar la coma
-            ss >> clientes[tamC - 1].estado;
-        }
-    }
-}
 */
 
