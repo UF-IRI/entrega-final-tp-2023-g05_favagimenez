@@ -38,26 +38,15 @@ typedef struct {
 
 } sAsistencia;
 
-struct Gimnasio {
-    Cliente* listaDeClientes;
-    Clases ClasesSemanales[6];
-};
+
 
 void registrarCliente(Cliente*& listaClientes, int* tamactual, Cliente nuevoCliente);
 void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual);
-//void agregar_inscripciones(Inscripcion*&lista_inscripciones, Inscripcion inscripciones, int*tamactual);
-//void agregar_asistencia(sAsistencia *&lista_asistencia, sAsistencia asistencias,int*tamactual);
-void resize(Cliente*& clientes, unsigned int& tamC);
-void read_archivo_clientes(ifstream &archi, Cliente*&clientes, unsigned int*tamC);
 Clases*read_archivo_clases(string a1, int*contador);
 Cliente* guardarCliente(string& archivo, int* cantidadClientes);
 tm* obtenerFechaHora(string cadena);
 void leerAsistencias(string& archibinrd);
 Clases* leerClase(string& archivo, int* cantidadClases);
-sAsistencia*leerArchivoBinario(string nombreArchivo, int*cantAsistencia);
-bool existeSuperposicion(Clases* clase, int numClases, string& claseAReservar, float horarReserva);
-/*
- * void registrarCliente(Gimnasio& gym);
- * void reservarClase(Gimnasio& gym);
-*/
+bool existeSuperposicion(Cliente* clase, int numClases, string& claseAReservar, float horarReserva);
+
 #endif // FUNCIONES_H

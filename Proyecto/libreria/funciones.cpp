@@ -127,18 +127,18 @@ tm* obtenerFechaHora(string cadena)
     ltm->tm_min = stoi(minuto);
     return ltm;
 }
-bool existeSuperposicion(Clases* clase, int numClases, string& claseAReservar, float horarReserva)
+bool existeSuperposicion(Cliente* clase, int numClases, string& claseAReservar, float horarReserva)
 {
     for(int i=0;i<numClases;i++)
     {
-        if(clase[i].nombre==claseAReservar)
+        if(clase[i].turnos.nombre==claseAReservar)
         {
-            float difHorario=clase[i].horario-horarReserva;
+            float difHorario=clase[i].turnos.horario-horarReserva;
             if(difHorario<0)
             {
-                difHorario=-difHorario;
+                return false;
             }
-            if(difHorario<1)
+            if(difHorario==0)
             {
                 return true;
             }
