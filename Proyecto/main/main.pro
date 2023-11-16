@@ -9,11 +9,10 @@ CONFIG += c++17 cmdline
 HEADERS += \
         ../libreria/libreria.h\
         ../libreria/libreria_global.h
-        ../archivos/archivos.h
+
 SOURCES += \
         main.cpp\
         ../libreria/libreria.cpp
-        ../archivos/archivos.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,6 +1,6 @@
 #ifndef FUNCIONES_H
 #define FUNCIONES_H
-#include "gimnasio.h"
+
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -23,11 +23,13 @@ struct Cliente {
     string telefono;
     string fechaNac;
     int estado;
-    Clases turnos;
+    Clases*clases;
+    int cantClases;
 };
 
 struct Inscripcion {
     unsigned int idClase;
+    unsigned int idCliente;
     time_t fechaInscripcion;
 };
 typedef struct {
@@ -44,9 +46,11 @@ void registrarCliente(Cliente*& listaClientes, int* tamactual, Cliente nuevoClie
 void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual);
 Clases*read_archivo_clases(string a1, int*contador);
 Cliente* guardarCliente(string& archivo, int* cantidadClientes);
-tm* obtenerFechaHora(string cadena);
+tm* obtenerFechaHora();
 void leerAsistencias(string& archibinrd);
+void reseteararchivo(string rutaarchi);
 Clases* leerClase(string& archivo, int* cantidadClases);
-bool existeSuperposicion(Cliente* clase, int numClases, string& claseAReservar, float horarReserva);
-
-#endif // FUNCIONES_H
+bool existeSuperposicion(Cliente* cliente, Clases*clase);
+//void reservarClase(Clases*& listaClases, string& nombreClase, int horario, int& cantidadClases);
+Inscripcion*reservarClase(Cliente*cliente, Clases*clase);
+#endif //FUNCIONES_H

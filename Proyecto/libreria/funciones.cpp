@@ -1,5 +1,6 @@
 #include "funciones.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -95,7 +96,25 @@ Cliente* guardarCliente(string& archivo, int* cantidadClientes) {
     infile.close();
     return listaClientes;
 }
-tm* obtenerFechaHora(string cadena)
+
+Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
+    if(!existeSuperposicion(cliente, clase)){
+        if(clase->cupo<clase->cupoMax){
+            cout<<"Se pudo reservar";
+            cliente->clases[cliente->cantClases]=clase;
+            cliente->cantClases++;
+            clase->cupo++;
+            Inscripcion*nuevainscripcion;
+            nuevainscripcion->fechaInscripcion=obtenerFechaHora();
+            nuevainscripcion->idClase=clase->idClase;
+            nuevainscripcion->idCliente=cliente->idCliente;
+            return nuevainscripcion;
+        }
+    }
+    return nullptr;
+}
+/*
+tm* obtenerFechaHora()
 {
     tm* ltm = new tm;
     int i = 0;
@@ -127,25 +146,20 @@ tm* obtenerFechaHora(string cadena)
     ltm->tm_min = stoi(minuto);
     return ltm;
 }
-bool existeSuperposicion(Cliente* clase, int numClases, string& claseAReservar, float horarReserva)
-{
-    for(int i=0;i<numClases;i++)
-    {
-        if(clase[i].turnos.nombre==claseAReservar)
-        {
-            float difHorario=clase[i].turnos.horario-horarReserva;
-            if(difHorario<0)
-            {
-                return false;
-            }
-            if(difHorario==0)
-            {
-                return true;
-            }
+*/
 
+void reseteararchivo(string rutaarchi){
+    std::ofstream ofs;
+    ofs.open("iriClientes.csv", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+}
+bool existeSuperposicion(Cliente* cliente, Clases*clase){
+    for(int i=0;i<cliente->cantClases;i++){
+        if(cliente->clases[i].horario==clase->horario){
+            return true;
         }
+
     }
     return false;
 }
-
 
