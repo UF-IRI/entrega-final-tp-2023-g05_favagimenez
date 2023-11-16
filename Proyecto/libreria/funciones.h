@@ -46,7 +46,7 @@ void registrarCliente(Cliente*& listaClientes, int* tamactual, Cliente nuevoClie
 void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual);
 Clases*read_archivo_clases(string a1, int*contador);
 Cliente* guardarCliente(string& archivo, int* cantidadClientes);
-tm* obtenerFechaHora();
+void obtenerFechaHora();
 void leerAsistencias(string& archibinrd);
 void reseteararchivo(string rutaarchi);
 Clases* leerClase(string& archivo, int* cantidadClases);

@@ -4,11 +4,11 @@
 
 using namespace std;
 
-void registrarCliente(Cliente*& listaClientes, int *tamactual,  Cliente nuevoCliente) {
+void registrarCliente(Cliente*& listaClientes, int *tamactual, Cliente nuevoCliente) {
     *tamactual=*tamactual+1;
     Cliente* aux = new Cliente[*tamactual];
     int i=0;
-    while (i < *tamactual - 1 && *tamactual - 1 != 0) {
+    while (i<*tamactual-1&&*tamactual-1!=0) {
         aux[i] = listaClientes[i];
         i++;
     }
@@ -88,7 +88,6 @@ Cliente* guardarCliente(string& archivo, int* cantidadClientes) {
         getline(ss, nuevoCliente.apellido, coma);
         getline(ss, nuevoCliente.email, coma);
         getline(ss, nuevoCliente.telefono);
-        /*getline(ss, nuevoCliente.fechaNac, coma);*/
         ss>>nuevoCliente.estado;
         registrarCliente(listaClientes, cantidadClientes, nuevoCliente);
         cantidadClientes++;
@@ -113,44 +112,18 @@ Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
     }
     return nullptr;
 }
-/*
-tm* obtenerFechaHora()
+void obtenerFechaHora()
 {
-    tm* ltm = new tm;
-    int i = 0;
-    int j = 0;
-    string dia, mes, anio, hora, minuto = " ";
-    while (i<cadena.length()) {
-        char aux = cadena[i];
-        if (aux !='/'&&aux != ' '&&aux!=':') {
-            if (j==0)
-                dia += aux;
-            else if (j==1)
-                mes += aux;
-            else if (j==2)
-                anio += aux;
-            else if (j==3)
-                hora += aux;
-            else if (j==4)
-                minuto += aux;
-        }
-        else {
-            j++;
-        }
-        i++;
-    }
-    ltm->tm_year = stoi(anio) - 1900;
-    ltm->tm_mday =stoi(dia);
-    ltm->tm_mon =stoi(mes) - 1;
-    ltm->tm_hour =stoi(hora);
-    ltm->tm_min = stoi(minuto);
-    return ltm;
+time_t auxiliar_fecha = time(0);
+tm* hoy = localtime(&auxiliar_fecha);
+tm fecha_hoy;
+fecha_hoy.tm_mday = hoy->tm_mday;
+fecha_hoy.tm_mon = hoy->tm_mon;
+fecha_hoy.tm_year = hoy->tm_year;
 }
-*/
-
 void reseteararchivo(string rutaarchi){
-    std::ofstream ofs;
-    ofs.open("iriClientes.csv", std::ofstream::out | std::ofstream::trunc);
+    ofstream ofs;
+    ofs.open("iriClientes.csv", ofstream::out | ofstream::trunc);
     ofs.close();
 }
 bool existeSuperposicion(Cliente* cliente, Clases*clase){
