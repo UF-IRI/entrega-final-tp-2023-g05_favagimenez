@@ -113,10 +113,44 @@ Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
     }
     return nullptr;
 }
+/*
+tm* obtenerFechaHora()
+{
+    tm* ltm = new tm;
+    int i = 0;
+    int j = 0;
+    string dia, mes, anio, hora, minuto = " ";
+    while (i<cadena.length()) {
+        char aux = cadena[i];
+        if (aux !='/'&&aux != ' '&&aux!=':') {
+            if (j==0)
+                dia += aux;
+            else if (j==1)
+                mes += aux;
+            else if (j==2)
+                anio += aux;
+            else if (j==3)
+                hora += aux;
+            else if (j==4)
+                minuto += aux;
+        }
+        else {
+            j++;
+        }
+        i++;
+    }
+    ltm->tm_year = stoi(anio) - 1900;
+    ltm->tm_mday =stoi(dia);
+    ltm->tm_mon =stoi(mes) - 1;
+    ltm->tm_hour =stoi(hora);
+    ltm->tm_min = stoi(minuto);
+    return ltm;
+}
+*/
 
 void reseteararchivo(string rutaarchi){
-    ofstream ofs;
-    ofs.open("iriClientes.csv", ofstream::out | ofstream::trunc);
+    std::ofstream ofs;
+    ofs.open("iriClientes.csv", std::ofstream::out | std::ofstream::trunc);
     ofs.close();
 }
 bool existeSuperposicion(Cliente* cliente, Clases*clase){
@@ -128,23 +162,4 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
     }
     return false;
 }
-void obtenerFechaHora()
-{
-    time_t auxiliar_fecha = time(0);
-    tm* hoy = localtime(&auxiliar_fecha);
-    tm fecha_hoy;
-    fecha_hoy.tm_mday = hoy->tm_mday;
-    fecha_hoy.tm_mon = hoy->tm_mon;
-    fecha_hoy.tm_year = hoy->tm_year;
-}
-string obtenerFechaHora() {
-  // Obtiene la fecha y hora actual
-  time_t now = time(nullptr);
 
-  // Convierte la fecha y hora a una cadena
-  char fechaHora[100];
-  strftime(fechaHora, sizeof(fechaHora), "%d/%m/%Y %H:%M:%S", localtime(&now));
-
-  // Devuelve la fecha y hora como una cadena
-  return fechaHora;
-}
