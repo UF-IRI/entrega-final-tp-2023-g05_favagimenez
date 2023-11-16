@@ -28,35 +28,6 @@ void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual){
     lista_clases=aux;
 
 }
-/*
-void read_archivo_clientes(ifstream &archi, Cliente *&clientes, unsigned int *tamC){
-    string linea;
-    stringstream ss;
-
-    if (archi.is_open()) {
-        getline(archi, linea); // Leer encabezado, si es necesario
-
-        while (getline(archi, linea)) {
-            ss.clear();
-            ss << linea;
-
-            // Incrementar el tamaño del arreglo de clientes
-            resize(clientes, tamC);
-
-            // Leer los campos y asignarlos a la estructura Cliente
-            ss >> clientes[tamC - 1].idCliente;
-            ss.ignore(); // Ignorar la coma
-            getline(ss, clientes[tamC - 1].nombre, ',');
-            getline(ss, clientes[tamC - 1].apellido, ',');              //VER
-            getline(ss, clientes[tamC - 1].email, ',');
-            getline(ss, clientes[tamC - 1].telefono, ',');
-            ss >> clientes[tamC - 1].fechaNac;
-            ss.ignore(); // Ignorar la coma
-            ss >> clientes[tamC - 1].estado;
-        }
-    }
-}
-*/
 void leerAsistencias(string& archibinrd) {
    ifstream f(archibinrd, ios::binary);
 
@@ -72,62 +43,34 @@ void leerAsistencias(string& archibinrd) {
             }
         }
     }
-
     f.close();
 }
-/*sAsistencia*leerArchivoBinario(string nombreArchivo, int* cantAsistencias){
-    ifstream archibinrd(nombreArchivo, ios::binary);
-
-    if (!archibinrd.is_open()) {
-       cout << "Error al abrir el archivo para lectura." <<endl;
-        return nullptr;
-    }
-     sAsistencia* asistencias = new sAsistencia[*cantAsistencias];
-
-    for (int i = 0; i < *cantAsistencias; ++i) {
-        archibinrd.read((char*)asistencias[i].idCliente, sizeof(unsigned int));
-        archibinrd.read((char*)asistencias[i].cantInscriptos, sizeof(unsigned int));
-
-        asistencias[i].CursosInscriptos = new Inscripcion[asistencias[i].cantInscriptos];
-
-        archibinrd.read((char*)asistencias[i].CursosInscriptos,
-                        sizeof(Inscripcion) * asistencias[i].cantInscriptos);
-    }
-
-    archibinrd.close();
-
-    return asistencias;
-}
-*
-Clases* cargarClases(string& archivo, int& cantidadClases) {
-    int MAX_CLASES = 6;
-    Clases* listaClases = new Clases[MAX_CLASES];
-    cantidadClases = 0;
-    ifstream infile(archivo);
+Clases* leerClase(string& archivo, int* cantidadClases) {
+ Clases* listaClases = nullptr;
+    Clases* listaClases ;
+    ifstream infile("iriClasesGYM.csv");
     if (!infile.is_open()) {
-        std::cout << "Error al leer archivo";
+        cout << "Error al leer archivo de clientes";
         return nullptr;
     }
     string line;
-    getline(infile, line);//////
-    while (cantidadClases < MAX_CLASES && getline(infile, line)) {
-        stringstream ss(line);
-        ss >> listaClases[cantidadClases].Nombre_clase >> listaClases[cantidadClases].sala;
-        for (int j = 0; j < 6; ++j) {
-            for (int k = 0; k < 6; ++k) {
-                ss >> listaClases[cantidadClases].horarios[j][k];
-            }
-        }
-        ss >> listaClases[cantidadClases].cupoMax;
-        listaClases[cantidadClases].cupo = 0;
+    char coma = ',';
+    getline(infile, line);
+    while (getline(infile, line)) {
+        stringstream ss;
+        Clases nuevaClase;
+        ss>>nuevaClase.idClase;
+        getline(ss, nuevaClase.nombre, coma);
+        ss>>nuevaClase.horario;
+        agregar_clases(listaClases, nuevaClase, cantidadClases);
         cantidadClases++;
     }
     infile.close();
-    return listaClases;
-}*/
+    return listaClases;
+}
 Cliente* guardarCliente(string& archivo, int* cantidadClientes) {
     Cliente* listaClientes = nullptr;
-    cantidadClientes = nullptr;
+    cantidadClientes = 0;
     ifstream infile("iriClientesGYM.csv");
     if (!infile.is_open()) {
         cout << "Error al leer archivo";
@@ -184,8 +127,77 @@ tm* obtenerFechaHora(string cadena)
     ltm->tm_min = stoi(minuto);
     return ltm;
 }
+bool existeSuperposicion(Clases* clase, int numClases, string& claseAReservar, float horarReserva)
+{
+    for(int i=0;i<numClases;i++)
+    {
+        if(clase[i].nombre==claseAReservar)
+        {
+            float difHorario=clase[i].horario-horarReserva;
+            if(difHorario<0)
+            {
+                difHorario=-difHorario;
+            }
+            if(difHorario<1)
+            {
+                return true;
+            }
 
+        }
+    }
+    return false;
+}
 /*
+ * /*sAsistencia*leerArchivoBinario(string nombreArchivo, int* cantAsistencias){
+    ifstream archibinrd(nombreArchivo, ios::binary);
+
+    if (!archibinrd.is_open()) {
+       cout << "Error al abrir el archivo para lectura." <<endl;
+        return nullptr;
+    }
+     sAsistencia* asistencias = new sAsistencia[*cantAsistencias];
+
+    for (int i = 0; i < *cantAsistencias; ++i) {
+        archibinrd.read((char*)asistencias[i].idCliente, sizeof(unsigned int));
+        archibinrd.read((char*)asistencias[i].cantInscriptos, sizeof(unsigned int));
+
+        asistencias[i].CursosInscriptos = new Inscripcion[asistencias[i].cantInscriptos];
+
+        archibinrd.read((char*)asistencias[i].CursosInscriptos,
+                        sizeof(Inscripcion) * asistencias[i].cantInscriptos);
+    }
+
+    archibinrd.close();
+
+    return asistencias;
+}
+*
+Clases* cargarClases(string& archivo, int& cantidadClases) {
+    int MAX_CLASES = 6;
+    Clases* listaClases = new Clases[MAX_CLASES];
+    cantidadClases = 0;
+    ifstream infile(archivo);
+    if (!infile.is_open()) {
+        std::cout << "Error al leer archivo";
+        return nullptr;
+    }
+    string line;
+    getline(infile, line);//////
+    while (cantidadClases < MAX_CLASES && getline(infile, line)) {
+        stringstream ss(line);
+        ss >> listaClases[cantidadClases].Nombre_clase >> listaClases[cantidadClases].sala;
+        for (int j = 0; j < 6; ++j) {
+            for (int k = 0; k < 6; ++k) {
+                ss >> listaClases[cantidadClases].horarios[j][k];
+            }
+        }
+        ss >> listaClases[cantidadClases].cupoMax;
+        listaClases[cantidadClases].cupo = 0;
+        cantidadClases++;
+    }
+    infile.close();
+    return listaClases;
+}*
     Cliente nuevoCliente;
     cout << "Ingrese el nombre del cliente: ";
     cin >> nuevoCliente.nombre;
@@ -205,18 +217,33 @@ tm* obtenerFechaHora(string cadena)
     cout << "Cliente registrado" << endl;
 }
  *
- * bool existeSuperposicion(Cliente* cliente, string& claseAReservar){
-    // Recorre las clases ya reservadas por el cliente
-    for (int i = 0; i < Cliente.turnos; ++i) {
-        // Comprueba si la clase a reservar tiene superposición con alguna clase ya reservada
-        if (Cliente.turnos[i].Nombre_clase == claseAReservar) {
-            cout << "El cliente ya tiene una clase de " << Cliente.turnos[i].Nombre_clase << " reservada." << endl;
-            return true;  // Hay superposición
+/*
+void read_archivo_clientes(ifstream &archi, Cliente *&clientes, unsigned int *tamC){
+    string linea;
+    stringstream ss;
+
+    if (archi.is_open()) {
+        getline(archi, linea); // Leer encabezado, si es necesario
+
+        while (getline(archi, linea)) {
+            ss.clear();
+            ss << linea;
+
+            // Incrementar el tamaño del arreglo de clientes
+            resize(clientes, tamC);
+
+            // Leer los campos y asignarlos a la estructura Cliente
+            ss >> clientes[tamC - 1].idCliente;
+            ss.ignore(); // Ignorar la coma
+            getline(ss, clientes[tamC - 1].nombre, ',');
+            getline(ss, clientes[tamC - 1].apellido, ',');              //VER
+            getline(ss, clientes[tamC - 1].email, ',');
+            getline(ss, clientes[tamC - 1].telefono, ',');
+            ss >> clientes[tamC - 1].fechaNac;
+            ss.ignore(); // Ignorar la coma
+            ss >> clientes[tamC - 1].estado;
         }
     }
-    Cliente.turnos.Nombre_clase;
-
-    // No hay superposición
-    return false;
 }
 */
+

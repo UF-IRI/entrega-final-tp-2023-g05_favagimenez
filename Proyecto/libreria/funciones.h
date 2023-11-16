@@ -54,9 +54,11 @@ Clases*read_archivo_clases(string a1, int*contador);
 Cliente* guardarCliente(string& archivo, int* cantidadClientes);
 tm* obtenerFechaHora(string cadena);
 void leerAsistencias(string& archibinrd);
+Clases* leerClase(string& archivo, int* cantidadClases);
 sAsistencia*leerArchivoBinario(string nombreArchivo, int*cantAsistencia);
-/*void registrarCliente(Gimnasio& gym);
-bool existeSuperposicion(Clases* clase, string& claseAReservar);
-void reservarClase(Gimnasio& gym);
+bool existeSuperposicion(Clases* clase, int numClases, string& claseAReservar, float horarReserva);
+/*
+ * void registrarCliente(Gimnasio& gym);
+ * void reservarClase(Gimnasio& gym);
 */
 #endif // FUNCIONES_H

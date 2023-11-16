@@ -27,6 +27,6 @@ int main() {
   //  Clases* listaClases = cargarClases("iriClasesGYM", cantidadClases);
     //delete[] listaClases;*/
 
-   cout << "Hola mundo!";
+    cout << "Hola mundo!"<<endl;
     return 0;
 }
