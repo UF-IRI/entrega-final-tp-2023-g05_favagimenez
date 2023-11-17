@@ -114,17 +114,28 @@ Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
 }
 void obtenerFechaHora()
 {
+     static tm ultimaFechaReset = {};  //static mantiene a la variable y la inicializa solo la primera vez que se llama a la funcion
 time_t auxiliar_fecha = time(0);
 tm* hoy = localtime(&auxiliar_fecha);
 tm fecha_hoy;
 fecha_hoy.tm_mday = hoy->tm_mday;
 fecha_hoy.tm_mon = hoy->tm_mon;
 fecha_hoy.tm_year = hoy->tm_year;
+if (hoy->tm_mday != ultimaFechaReset.tm_mday || hoy->tm_mon != ultimaFechaReset.tm_mon || hoy->tm_year != ultimaFechaReset.tm_year) {
+        // Resetear el archivo
+        reseteararchivo("iriClientes.csv");
+
+        // Actualizar la fecha del último reseteo
+        ultimaFechaReset = *hoy;
+}
 }
 void reseteararchivo(string rutaarchi){
     ofstream ofs;
     ofs.open("iriClientes.csv", ofstream::out | ofstream::trunc);
     ofs.close();
+}
+void regenerarArchivo(){
+
 }
 bool existeSuperposicion(Cliente* cliente, Clases*clase){
     for(int i=0;i<cliente->cantClases;i++){

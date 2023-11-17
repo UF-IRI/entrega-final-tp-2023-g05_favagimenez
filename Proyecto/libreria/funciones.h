@@ -53,4 +53,5 @@ Clases* leerClase(string& archivo, int* cantidadClases);
 bool existeSuperposicion(Cliente* cliente, Clases*clase);
 //void reservarClase(Clases*& listaClases, string& nombreClase, int horario, int& cantidadClases);
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase);
+void regenerarArchivo();
 #endif //FUNCIONES_H
