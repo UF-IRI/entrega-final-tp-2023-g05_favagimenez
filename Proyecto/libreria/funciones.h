@@ -1,9 +1,10 @@
 #ifndef FUNCIONES_H
 #define FUNCIONES_H
-/*
+#include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
+#define MAXCLASES 200
 using namespace std;
 
 struct Clases {
@@ -23,7 +24,7 @@ struct Cliente {
     string telefono;
     string fechaNac;
     int estado;
-    Clases*clases;
+    Clases*clases[MAXCLASES];
     int cantClases;
 };
 
@@ -45,13 +46,13 @@ typedef struct {
 void registrarCliente(Cliente*& listaClientes, int* tamactual, Cliente nuevoCliente);
 void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual);
 Clases*read_archivo_clases(string a1, int*contador);
-Cliente* guardarCliente(string& archivo, int* cantidadClientes);
-void obtenerFechaHora();
-void leerAsistencias(string& archibinrd);
+Cliente* guardarCliente(string archivo, int* cantidadClientes);
+time_t obtenerFechaHora();
+void leerAsistencias(string archibinrd);
 void reseteararchivo(string rutaarchi);
 Clases* leerClase(string& archivo, int* cantidadClases);
 bool existeSuperposicion(Cliente* cliente, Clases*clase);
 //void reservarClase(Clases*& listaClases, string& nombreClase, int horario, int& cantidadClases);
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase);
-void regenerarArchivo();*/
+void regenerarArchivo();
 #endif //FUNCIONES_H

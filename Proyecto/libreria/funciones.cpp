@@ -1,7 +1,8 @@
 #include "funciones.h"
-/*#include <iostream>
+#include <iostream>
 #include <string>
-
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 void registrarCliente(Cliente*& listaClientes, int *tamactual, Cliente nuevoCliente) {
@@ -29,10 +30,13 @@ void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual){
     lista_clases=aux;
 
 }
-void leerAsistencias(string& archibinrd) {
-   ifstream f(archibinrd, ios::binary);
+void leerAsistencias(string archibinrd) {
+   ifstream f(archibinrd, ios::out | ios::binary);
+    cout<<"Nombre archivo";
+    cout<<archibinrd;
 
     if (f.is_open()) {
+        cout<<"Estoy leyendo el archivo";
         sAsistencia asistencia;
         while (f.read((char*)&asistencia, sizeof(sAsistencia))) {
             cout << "ID del cliente: " << asistencia.idCliente << endl;
@@ -44,6 +48,8 @@ void leerAsistencias(string& archibinrd) {
             }
         }
     }
+    else
+        cout<<"Error al leer archivo";
     f.close();
 }
 Clases* leerClase(string& archivo, int* cantidadClases) {
@@ -69,9 +75,8 @@ Clases* leerClase(string& archivo, int* cantidadClases) {
     infile.close();
     return listaClases;
 }
-Cliente* guardarCliente(string& archivo, int* cantidadClientes) {
-    Cliente* listaClientes = nullptr;
-    cantidadClientes = 0;
+Cliente* guardarCliente(string archivo, int* cantidadClientes) {
+    Cliente* listaCliente;
     ifstream infile("iriClientesGYM.csv");
     if (!infile.is_open()) {
         cout << "Error al leer archivo";
@@ -89,19 +94,19 @@ Cliente* guardarCliente(string& archivo, int* cantidadClientes) {
         getline(ss, nuevoCliente.email, coma);
         getline(ss, nuevoCliente.telefono);
         ss>>nuevoCliente.estado;
-        registrarCliente(listaClientes, cantidadClientes, nuevoCliente);
+        registrarCliente(listaCliente, cantidadClientes, nuevoCliente);
         cantidadClientes++;
     }
     infile.close();
-    return listaClientes;
+    return listaCliente;
 }
 
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
     if(!existeSuperposicion(cliente, clase)){
         if(clase->cupo<clase->cupoMax){
             cout<<"Se pudo reservar";
+             cliente->cantClases++;
             cliente->clases[cliente->cantClases]=clase;
-            cliente->cantClases++;
             clase->cupo++;
             Inscripcion*nuevainscripcion;
             nuevainscripcion->fechaInscripcion=obtenerFechaHora();
@@ -112,12 +117,12 @@ Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
     }
     return nullptr;
 }
-void obtenerFechaHora()
+time_t obtenerFechaHora()
 {
      static tm ultimaFechaReset = {};  //static mantiene a la variable y la inicializa solo la primera vez que se llama a la funcion
 time_t auxiliar_fecha = time(0);
-tm* hoy = localtime(&auxiliar_fecha);
-tm fecha_hoy;
+//tm* hoy = localtime(&auxiliar_fecha);
+/*tm fecha_hoy;
 fecha_hoy.tm_mday = hoy->tm_mday;
 fecha_hoy.tm_mon = hoy->tm_mon;
 fecha_hoy.tm_year = hoy->tm_year;
@@ -128,6 +133,8 @@ if (hoy->tm_mday != ultimaFechaReset.tm_mday || hoy->tm_mon != ultimaFechaReset.
         // Actualizar la fecha del último reseteo
         ultimaFechaReset = *hoy;
 }
+return auxiliar_fecha;*/
+return auxiliar_fecha;
 }
 void reseteararchivo(string rutaarchi){
     ofstream ofs;
@@ -139,11 +146,11 @@ void regenerarArchivo(){
 }
 bool existeSuperposicion(Cliente* cliente, Clases*clase){
     for(int i=0;i<cliente->cantClases;i++){
-        if(cliente->clases[i].horario==clase->horario){
+        if(cliente->clases[i]->horario==clase->horario){
             return true;
         }
 
     }
     return false;
-}*/
+}
 

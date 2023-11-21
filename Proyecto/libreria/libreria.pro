@@ -1,4 +1,5 @@
 TEMPLATE = lib
+CONFIG += staticlib
 DEFINES += LIBRERIA_LIBRARY
 
 CONFIG += c++17

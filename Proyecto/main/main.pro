@@ -7,12 +7,11 @@ CONFIG += c++17 cmdline
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 HEADERS += \
-        ../libreria/libreria.h\
-        ../libreria/libreria_global.h
+
 
 SOURCES += \
         main.cpp\
-        ../libreria/libreria.cpp
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -25,3 +24,6 @@ else:unix: LIBS += -L$$OUT_PWD/../libreria/ -llibreria
 
 INCLUDEPATH += $$PWD/../libreria
 DEPENDPATH += $$PWD/../libreria
+
+DISTFILES += \
+    asistencias.dat
