@@ -1,5 +1,5 @@
 #include "funciones.h"
-#include <iostream>
+/*#include <iostream>
 #include <string>
 
 using namespace std;
@@ -145,5 +145,5 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
 
     }
     return false;
-}
+}*/
 
