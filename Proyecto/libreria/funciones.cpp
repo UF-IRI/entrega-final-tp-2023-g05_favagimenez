@@ -17,7 +17,7 @@ void registrarCliente(Cliente*& listaClientes, int *tamactual, Cliente nuevoClie
     delete[] listaClientes;
     listaClientes = aux;
 }
-void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual){
+void agregar_clases(Clases*&lista_clases, Clases* clase, int*tamactual){
     *tamactual=*tamactual+1;
     int i=0;
     Clases*aux=new Clases[*tamactual];
@@ -25,16 +25,14 @@ void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual){
         aux[i]=lista_clases[i];
         i++;
     }
-    aux[i]=clase;
+    aux[i]=*clase;
     delete[]lista_clases;
     lista_clases=aux;
-
 }
 void leerAsistencias(string archibinrd) {
    ifstream f(archibinrd, ios::out | ios::binary);
     cout<<"Nombre archivo";
     cout<<archibinrd;
-
     if (f.is_open()) {
         cout<<"Estoy leyendo el archivo";
         sAsistencia asistencia;
@@ -69,14 +67,14 @@ Clases* leerClase(string& archivo, int* cantidadClases) {
         ss>>nuevaClase.idClase;
         getline(ss, nuevaClase.nombre, coma);
         ss>>nuevaClase.horario;
-        agregar_clases(listaClases, nuevaClase, cantidadClases);
-        cantidadClases++;
+        agregar_clases(listaClases, &nuevaClase, cantidadClases);
     }
     infile.close();
     return listaClases;
 }
 Cliente* guardarCliente(string archivo, int* cantidadClientes) {
-    Cliente* listaCliente;
+    Cliente* listaCliente=new Cliente[0];
+    *cantidadClientes=0;
     ifstream infile("iriClientesGYM.csv");
     if (!infile.is_open()) {
         cout << "Error al leer archivo";
@@ -95,18 +93,16 @@ Cliente* guardarCliente(string archivo, int* cantidadClientes) {
         getline(ss, nuevoCliente.telefono);
         ss>>nuevoCliente.estado;
         registrarCliente(listaCliente, cantidadClientes, nuevoCliente);
-        cantidadClientes++;
     }
     infile.close();
     return listaCliente;
 }
-
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
     if(!existeSuperposicion(cliente, clase)){
         if(clase->cupo<clase->cupoMax){
             cout<<"Se pudo reservar";
              cliente->cantClases++;
-            cliente->clases[cliente->cantClases]=clase;
+            agregar_clases(cliente->clases,clase, cliente->cantClases);
             clase->cupo++;
             Inscripcion*nuevainscripcion;
             nuevainscripcion->fechaInscripcion=obtenerFechaHora();
@@ -119,38 +115,37 @@ Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
 }
 time_t obtenerFechaHora()
 {
-     static tm ultimaFechaReset = {};  //static mantiene a la variable y la inicializa solo la primera vez que se llama a la funcion
+       //static mantiene a la variable y la inicializa solo la primera vez que se llama a la funcion
 time_t auxiliar_fecha = time(0);
-//tm* hoy = localtime(&auxiliar_fecha);
-/*tm fecha_hoy;
-fecha_hoy.tm_mday = hoy->tm_mday;
-fecha_hoy.tm_mon = hoy->tm_mon;
-fecha_hoy.tm_year = hoy->tm_year;
-if (hoy->tm_mday != ultimaFechaReset.tm_mday || hoy->tm_mon != ultimaFechaReset.tm_mon || hoy->tm_year != ultimaFechaReset.tm_year) {
-        // Resetear el archivo
-        reseteararchivo("iriClientes.csv");
-
-        // Actualizar la fecha del último reseteo
-        ultimaFechaReset = *hoy;
-}
-return auxiliar_fecha;*/
+//
 return auxiliar_fecha;
 }
-void reseteararchivo(string rutaarchi){
-    ofstream ofs;
-    ofs.open("iriClientes.csv", ofstream::out | ofstream::trunc);
-    ofs.close();
-}
-void regenerarArchivo(){
-
+void reseteararchivo(string rutaarchi, tm* fechadereset){
+    time_t auxiliar_fecha = time(0);
+    tm* hoy = localtime(&auxiliar_fecha);
+   if(hoy->tm_mday!=fechadereset->tm_mday)
+    {
+        ofstream ofs;
+        ofs.open("iriClientes.csv", ofstream::out | ofstream::trunc);
+        fechadereset=hoy;
+        ofs.close();
+    }
 }
 bool existeSuperposicion(Cliente* cliente, Clases*clase){
-    for(int i=0;i<cliente->cantClases;i++){
+
+    for(int i=0;i<*cliente->cantClases;i++){
         if(cliente->clases[i]->horario==clase->horario){
             return true;
         }
 
     }
     return false;
+}
+void filtrar_clase(Cliente* cliente, int*tamactual)
+{
+    for(int i=0;i<tamactual;i++)
+    {
+        int id_clase=lista_clases[i].idClase;
+    }
 }
 

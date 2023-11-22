@@ -6,7 +6,6 @@
 #include <sstream>
 #define MAXCLASES 200
 using namespace std;
-
 struct Clases {
     unsigned idClase;
     string nombre;
@@ -14,8 +13,6 @@ struct Clases {
     int cupo;
     int cupoMax;
 };
-
-
 struct Cliente {
     unsigned int idCliente;
     string nombre;
@@ -24,10 +21,9 @@ struct Cliente {
     string telefono;
     string fechaNac;
     int estado;
-    Clases*clases[MAXCLASES];
-    int cantClases;
+    Clases*clases;
+    int* cantClases;
 };
-
 struct Inscripcion {
     unsigned int idClase;
     unsigned int idCliente;
@@ -38,18 +34,14 @@ typedef struct {
     unsigned int idCliente, cantInscriptos;
 
     Inscripcion* CursosInscriptos;
-
 } sAsistencia;
-
-
-
 void registrarCliente(Cliente*& listaClientes, int* tamactual, Cliente nuevoCliente);
-void agregar_clases(Clases*&lista_clases, Clases clase, int*tamactual);
+void agregar_clases(Clases*&lista_clases, Clases *clase, int*tamactual);
 Clases*read_archivo_clases(string a1, int*contador);
 Cliente* guardarCliente(string archivo, int* cantidadClientes);
 time_t obtenerFechaHora();
 void leerAsistencias(string archibinrd);
-void reseteararchivo(string rutaarchi);
+void reseteararchivo(string rutaarchi, time_t fechadereset);
 Clases* leerClase(string& archivo, int* cantidadClases);
 bool existeSuperposicion(Cliente* cliente, Clases*clase);
 //void reservarClase(Clases*& listaClases, string& nombreClase, int horario, int& cantidadClases);
