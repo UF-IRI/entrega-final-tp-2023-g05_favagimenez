@@ -49,9 +49,10 @@ void leerAsistencias(string archibinrd) {
         cout<<"Error al leer archivo";
     f.close();
 }
-Clases* leerClase(string& archivo, int* cantidadClases) {
+Clases* leerClase(string archivo, int* cantidadClases) {
+    Clases* listaClases = nullptr;
+    *cantidadClases = 0;
 
-    Clases* listaClases;
     ifstream infile("iriClasesGYM.csv");
     if (!infile.is_open()) {
         cout << "Error al leer archivo de clientes";
@@ -97,7 +98,7 @@ Cliente* guardarCliente(string archivo, int* cantidadClientes) {
     return listaCliente;
 }
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
-    if(!existeSuperposicion(cliente, clase)){
+    if(!existeSuperposicion(cliente, clase)){ //aca no recorremos en esta funcion porque al llamar la funcion existe superposicion, esa funcion recorre la lista de clases del cliente
         if(clase->cupo<clase->cupoMax){
             cout<<"Se pudo reservar";
              cliente->cantClases++;
@@ -114,7 +115,7 @@ Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
 }
 time_t obtenerFechaHora()
 {
-       //static mantiene a la variable y la inicializa solo la primera vez que se llama a la funcion
+
 time_t auxiliar_fecha = time(0);
 //
 return auxiliar_fecha;
@@ -130,6 +131,17 @@ void reseteararchivo(string rutaarchi, tm* fechadereset){
         ofs.close();
     }
 }
+void resetearbinario(string rutaarchi, tm* fechadereset){
+    time_t auxiliar_fecha = time(0);
+    tm* hoy = localtime(&auxiliar_fecha);
+    if(hoy->tm_mday!=fechadereset->tm_mday)
+    {
+        ofstream ofs;
+        ofs.open("asistencia.dat", ofstream::out | ofstream::trunc);
+        fechadereset=hoy;
+        ofs.close();
+    }
+}
 bool existeSuperposicion(Cliente* cliente, Clases*clase){
 
     for(int i=0;i<*cliente->cantClases;i++){
@@ -140,11 +152,11 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
     }
     return false;
 }
-void filtrar_clase(Cliente* cliente, int*tamactual)
+/*void filtrar_clase(Cliente* cliente, int*tamactual)
 {
     for(int i=0;i<*tamactual;i++)
     {
         int id_clase=cliente[i].clases->idClase;
     }
-}
+}*/
 
