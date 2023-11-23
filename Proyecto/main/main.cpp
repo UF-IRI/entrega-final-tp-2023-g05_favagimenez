@@ -7,8 +7,10 @@ int main() {
     cout<<"Hola munda1";
     string rutaArchivoClases = "../Proyecto/iriClasesGYM.csv";
     string rutaArchivoClientes = "../Proyecto/iriClientesGYM.csv";
-    string rutaArchivoAsistencias = "../Proyecto/asistencias.dat";
-   leerAsistencias(rutaArchivoAsistencias);
+    //string rutaArchivoAsistencias = "../Proyecto/asistencias.dat";}
+    string n;
+   ifstream f("asistencias.dat", ios::out | ios::binary);
+   leerAsistencias(f, n);
     /*int cantAsistencias;
     sAsistencia* asistencias = leerArchivoBinario("asistencias_1697673600000.dat", &cantAsistencias);
     // "../gngng/

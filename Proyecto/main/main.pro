@@ -26,4 +26,5 @@ INCLUDEPATH += $$PWD/../libreria
 DEPENDPATH += $$PWD/../libreria
 
 DISTFILES += \
-    asistencias.dat
+    asistencias.dat \
+    asistencias.dat.dat
