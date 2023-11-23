@@ -40,12 +40,11 @@ void agregar_clases(Clases*&lista_clases, Clases *clase, int*tamactual);
 Clases*read_archivo_clases(string a1, int*contador);
 Cliente* guardarCliente(string archivo, int* cantidadClientes);
 time_t obtenerFechaHora();
-void leerAsistencias(ifstream &f, string archibinrd);
+void leerAsistencias(string archibinrd);
 void reseteararchivo(string rutaarchi, time_t fechadereset);
 Clases* leerClase(string& archivo, int* cantidadClases);
 bool existeSuperposicion(Cliente* cliente, Clases*clase);
 //void reservarClase(Clases*& listaClases, string& nombreClase, int horario, int& cantidadClases);
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase);
 void regenerarArchivo();
-void filtrar_clase(Cliente* cliente, int*tamactual, Clases* lista_clases);
 #endif //FUNCIONES_H

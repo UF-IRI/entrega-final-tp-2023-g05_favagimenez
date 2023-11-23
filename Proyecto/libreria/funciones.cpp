@@ -29,8 +29,8 @@ void agregar_clases(Clases*&lista_clases, Clases* clase, int*tamactual){
     delete[]lista_clases;
     lista_clases=aux;
 }
-void leerAsistencias(ifstream& f,string archibinrd) {
-
+void leerAsistencias(string archibinrd) {
+   ifstream f(archibinrd, ios::out | ios::binary);
     cout<<"Nombre archivo";
     cout<<archibinrd;
     if (f.is_open()) {
@@ -137,14 +137,14 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
         if(cliente[i].clases->horario==clase->horario){
             return true;
         }
+
     }
     return false;
 }
-void filtrar_clase(Cliente* cliente, int*tamactual, Clases* lista_clases)
+void filtrar_clase(Cliente* cliente, int*tamactual)
 {
-    for(int i=0;i<*tamactual;i++)
+    for(int i=0;i<tamactual;i++)
     {
-
         int id_clase=lista_clases[i].idClase;
     }
 }
