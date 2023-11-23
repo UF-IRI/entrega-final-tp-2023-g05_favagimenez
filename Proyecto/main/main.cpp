@@ -7,7 +7,7 @@ int main() {
     cout<<"Hola munda1";
     string rutaArchivoClases = "../Proyecto/iriClasesGYM.csv";
     string rutaArchivoClientes = "../Proyecto/iriClientesGYM.csv";
-    string rutaArchivoAsistencias = "../Proyecto/asistencias.dat";
+   string rutaArchivoAsistencias = "../Proyecto/asistencias.dat";
    leerAsistencias(rutaArchivoAsistencias);
     /*int cantAsistencias;
     sAsistencia* asistencias = leerArchivoBinario("asistencias_1697673600000.dat", &cantAsistencias);

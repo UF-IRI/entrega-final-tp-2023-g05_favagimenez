@@ -134,7 +134,7 @@ void reseteararchivo(string rutaarchi, tm* fechadereset){
 bool existeSuperposicion(Cliente* cliente, Clases*clase){
 
     for(int i=0;i<*cliente->cantClases;i++){
-        if(cliente->clases[i]->horario==clase->horario){
+        if(cliente[i].clases->horario==clase->horario){
             return true;
         }
 
@@ -143,9 +143,9 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
 }
 void filtrar_clase(Cliente* cliente, int*tamactual)
 {
-    for(int i=0;i<tamactual;i++)
+    for(int i=0;i<*tamactual;i++)
     {
-        int id_clase=lista_clases[i].idClase;
+        int id_clase=cliente[i].clases->idClase;
     }
 }
 
