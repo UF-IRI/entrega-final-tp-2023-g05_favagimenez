@@ -8,7 +8,9 @@ int main() {
     string rutaArchivoClases = "../Proyecto/iriClasesGYM.csv";
     string rutaArchivoClientes = "../Proyecto/iriClientesGYM.csv";
    string rutaArchivoAsistencias = "../Proyecto/asistencias.dat";
-   leerAsistencias(rutaArchivoAsistencias);
+    ifstream archivobinario;
+   archivobinario.open("asistencia.dat", ios::binary);
+   leerAsistencias("asistencias.dat");
     /*int cantAsistencias;
     sAsistencia* asistencias = leerArchivoBinario("asistencias_1697673600000.dat", &cantAsistencias);
     // "../gngng/

@@ -38,8 +38,7 @@ void leerAsistencias(string archibinrd) {
         sAsistencia asistencia;
         while (f.read((char*)&asistencia, sizeof(sAsistencia))) {
             cout << "ID del cliente: " << asistencia.idCliente << endl;
-            cout << "Cantidad de cursos a los que se inscribió: "
-                      << asistencia.cantInscriptos << endl;
+            cout << "Cantidad de cursos a los que se inscribio: "<< asistencia.cantInscriptos << endl;
             for (int i = 0; i < asistencia.cantInscriptos; i++) {
                 cout << "ID clase: " << asistencia.CursosInscriptos[i].idClase<< endl;
                 cout << "Fecha de inscripcion: "<< asistencia.CursosInscriptos[i].fechaInscripcion << endl;
