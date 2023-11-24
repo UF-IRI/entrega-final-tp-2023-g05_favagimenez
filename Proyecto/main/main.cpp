@@ -3,6 +3,7 @@
 #include "funciones.h"
 using namespace std;
 
+
 int main() {
     cout<<"Hola munda1\n";
    // string rutaArchivoClases = "../Proyecto/iriClasesGYM.csv";
@@ -11,21 +12,23 @@ int main() {
     ifstream archivobinario;
   archivobinario.open("asistencia.dat", ios::binary);
   leerAsistencias("asistencias.dat");
-
+  //sAsistencia*asistencia;
+  //int cantasistencias;
+  //asistencia=leerArchivoBinario("asistencias.dat",&cantasistencias);
    //ABRO ARCHIVO CLASES
-   ifstream archivo_clase;
-   archivo_clase.open("iriClasesGYM.csv", ios::out);
-   int cantidadClases;
-   Clases* listaClases = leerClase("iriClasesGYM.csv", &cantidadClases);
+   //ifstream archivo_clase;
+   //archivo_clase.open("iriClasesGYM.csv", ios::out);
+   //int cantidadClases;
+   //Clases* listaClases = leerClase("iriClasesGYM.csv", &cantidadClases);
 
    //ABRIR ARCHIVO CLIENTE
-   ifstream archivo_cliente;
-   archivo_cliente.open("iriClientesGYM.csv", ios::out);
+   //ifstream archivo_cliente;
+  // archivo_cliente.open("iriClientesGYM.csv", ios::out);
   // Cliente*cliente;
   // int cantclientes=0;
   // cliente=guardarCliente("iriClientesGYM.csv", &cantclientes);
-   int cantidadClientes;
-   Cliente* listaClientes = guardarCliente("iriClientesGYM.csv", &cantidadClientes);
+   //int cantidadClientes;
+   //Cliente* listaClientes = guardarCliente("iriClientesGYM.csv", &cantidadClientes);
 
 
     /*int cantAsistencias;

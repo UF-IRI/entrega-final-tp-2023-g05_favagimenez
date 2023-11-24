@@ -48,4 +48,5 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase);
 //void reservarClase(Clases*& listaClases, string& nombreClase, int horario, int& cantidadClases);
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase);
 void regenerarArchivo();
+sAsistencia* leerArchivoBinario(string nombreArchivo, int* cantAsistencias);
 #endif //FUNCIONES_H

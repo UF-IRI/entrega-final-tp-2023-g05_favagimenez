@@ -26,4 +26,6 @@ INCLUDEPATH += $$PWD/../libreria
 DEPENDPATH += $$PWD/../libreria
 
 DISTFILES += \
+    ../../build-Proyecto-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/main/iriClasesGYM.csv \
+    ../../build-Proyecto-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/main/iriClientesGYM.csv \
     asistencias.dat

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+
 #include <sstream>
 using namespace std;
 
@@ -31,6 +32,7 @@ void agregar_clases(Clases*&lista_clases, Clases* clase, int*tamactual){
 }
 void leerAsistencias(string archibinrd) {
    ifstream f(archibinrd, ios::out | ios::binary);
+
     cout<<"Nombre archivo";
     cout<<archibinrd;
     if (f.is_open()) {
@@ -40,8 +42,10 @@ void leerAsistencias(string archibinrd) {
             cout << "ID del cliente: " << asistencia.idCliente << endl;
             cout << "Cantidad de cursos a los que se inscribio: "<< asistencia.cantInscriptos << endl;
             for (int i = 0; i < asistencia.cantInscriptos; i++) {
-                cout << "ID clase: " << asistencia.CursosInscriptos[i].idClase<< endl;
-                cout << "Fecha de inscripcion: "<< asistencia.CursosInscriptos[i].fechaInscripcion << endl;
+                Inscripcion inscripcion;
+                f.read((char*)&inscripcion, sizeof(Inscripcion));
+                cout << "ID clase: " << inscripcion.idClase<< endl;
+                cout << "Fecha de inscripcion: "<< inscripcion.fechaInscripcion << endl;
             }
         }
     }
@@ -159,4 +163,31 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
         int id_clase=cliente[i].clases->idClase;
     }
 }*/
+sAsistencia* leerArchivoBinario(string nombreArchivo, int* cantAsistencias) {
+    ifstream archibinrd(nombreArchivo, ios::binary);
 
+    if (!archibinrd.is_open()) {
+        cout << "Error al abrir el archivo para lectura." <<endl;
+        return nullptr;
+    }
+
+    archibinrd.read((char*)cantAsistencias, sizeof(int));
+
+    // Utilizar un puntero para almacenar dinámicamente las asistencias
+    sAsistencia* asistencias = new sAsistencia[*cantAsistencias];
+
+    for (int i = 0; i < *cantAsistencias; ++i) {
+        asistencias[i].CursosInscriptos = nullptr; // Asegurarse de que el puntero esté inicializado a nullptr
+
+        archibinrd.read((char*)&asistencias[i].idCliente, sizeof(int));
+        archibinrd.read((char*)&asistencias[i].cantInscriptos, sizeof(int));
+
+        asistencias[i].CursosInscriptos = new Inscripcion[asistencias[i].cantInscriptos];
+
+        archibinrd.read((char*)asistencias[i].CursosInscriptos, sizeof(Inscripcion) * asistencias[i].cantInscriptos);
+    }
+
+    archibinrd.close();
+
+    return asistencias;
+}
