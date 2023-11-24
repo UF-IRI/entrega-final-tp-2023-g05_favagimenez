@@ -30,7 +30,7 @@ int main() {
    //int cantidadClientes;
    //Cliente* listaClientes = guardarCliente("iriClientesGYM.csv", &cantidadClientes);
 
-
+//
     /*int cantAsistencias;
     sAsistencia* asistencias = leerArchivoBinario("asistencias_1697673600000.dat", &cantAsistencias);
     // "../gngng/
