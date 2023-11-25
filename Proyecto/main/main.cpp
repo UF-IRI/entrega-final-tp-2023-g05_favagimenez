@@ -5,21 +5,18 @@ using namespace std;
 
 
 int main() {
-    cout<<"Hola munda1\n";
-   // string rutaArchivoClases = "../Proyecto/iriClasesGYM.csv";
-  //  string rutaArchivoClientes = "../Proyecto/iriClientesGYM.csv";
-  // string rutaArchivoAsistencias = "../Proyecto/asistencias.dat";
+
     ifstream archivobinario;
   archivobinario.open("asistencia.dat", ios::binary);
   leerAsistencias("asistencias.dat");
-  //sAsistencia*asistencia;
-  //int cantasistencias;
-  //asistencia=leerArchivoBinario("asistencias.dat",&cantasistencias);
+
    //ABRO ARCHIVO CLASES
-   //ifstream archivo_clase;
-   //archivo_clase.open("iriClasesGYM.csv", ios::out);
+   ifstream archivo_clase;
+   archivo_clase.open("iriClasesGYM.csv", ios::out);
    //int cantidadClases;
-   //Clases* listaClases = leerClase("iriClasesGYM.csv", &cantidadClases);
+   int N=0;
+   Clases*clase=new Clases[N];
+   leerClases(archivo_clase,clase,N);
 
    //ABRIR ARCHIVO CLIENTE
    //ifstream archivo_cliente;

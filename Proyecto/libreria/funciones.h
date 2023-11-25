@@ -2,12 +2,11 @@
 #define FUNCIONES_H
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <sstream>
+
 #define MAXCLASES 200
 using namespace std;
 struct Clases {
-    unsigned idClase;
+    int idClase;
     string nombre;
     float horario;
     int cupo;
@@ -44,9 +43,10 @@ void leerAsistencias(string archibinrd);
 void reseteararchivo(string rutaarchi, time_t fechadereset);
 void resetearbinario(string rutaarchi, tm* fechadereset);
 Clases* leerClase(string archivo, int* cantidadClases);
+void leerClases(ifstream &archi, Clases* &clase, int &tamC);
 bool existeSuperposicion(Cliente* cliente, Clases*clase);
 //void reservarClase(Clases*& listaClases, string& nombreClase, int horario, int& cantidadClases);
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase);
 void regenerarArchivo();
-sAsistencia* leerArchivoBinario(string nombreArchivo, int* cantAsistencias);
+
 #endif //FUNCIONES_H

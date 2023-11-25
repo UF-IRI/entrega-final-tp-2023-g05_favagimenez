@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-
 #include <sstream>
 using namespace std;
 
@@ -33,10 +32,9 @@ void agregar_clases(Clases*&lista_clases, Clases* clase, int*tamactual){
 void leerAsistencias(string archibinrd) {
    ifstream f(archibinrd, ios::out | ios::binary);
 
-    cout<<"Nombre archivo";
     cout<<archibinrd;
     if (f.is_open()) {
-        cout<<"Estoy leyendo el archivo";
+
         sAsistencia asistencia;
         while (f.read((char*)&asistencia, sizeof(sAsistencia))) {
             cout << "ID del cliente: " << asistencia.idCliente << endl;
@@ -53,7 +51,7 @@ void leerAsistencias(string archibinrd) {
         cout<<"Error al leer archivo";
     f.close();
 }
-Clases* leerClase(string archivo, int* cantidadClases) {
+/*Clases* leerClase(string archivo, int* cantidadClases) {
     Clases* listaClases = nullptr;
     *cantidadClases = 0;
 
@@ -75,6 +73,31 @@ Clases* leerClase(string archivo, int* cantidadClases) {
     }
     infile.close();
     return listaClases;
+}*/
+void leerClases(ifstream &archi, Clases* &clase, int &tamC){
+    string linea;
+    stringstream s;
+    Clases*clasess=new Clases[tamC];
+    if(archi.is_open()){
+
+        getline(archi, linea);
+
+        while(!archi.eof() && getline(archi, linea)){
+
+            s<<linea;
+
+            agregar_clases(clase,clasess,&tamC);
+
+            getline(s, linea, ',');
+            clase[tamC-1].idClase = stoi(linea);
+            getline(s,linea, ',');
+            clase[tamC-1].nombre=linea[1];
+            getline(s, linea, ',');
+            clase[tamC-1].horario=stof(linea);
+            getline(s, linea);
+
+        }
+    }
 }
 Cliente* guardarCliente(string archivo, int* cantidadClientes) {
     Cliente* listaCliente=new Cliente[0];
@@ -163,31 +186,4 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
         int id_clase=cliente[i].clases->idClase;
     }
 }*/
-sAsistencia* leerArchivoBinario(string nombreArchivo, int* cantAsistencias) {
-    ifstream archibinrd(nombreArchivo, ios::binary);
 
-    if (!archibinrd.is_open()) {
-        cout << "Error al abrir el archivo para lectura." <<endl;
-        return nullptr;
-    }
-
-    archibinrd.read((char*)cantAsistencias, sizeof(int));
-
-    // Utilizar un puntero para almacenar dinámicamente las asistencias
-    sAsistencia* asistencias = new sAsistencia[*cantAsistencias];
-
-    for (int i = 0; i < *cantAsistencias; ++i) {
-        asistencias[i].CursosInscriptos = nullptr; // Asegurarse de que el puntero esté inicializado a nullptr
-
-        archibinrd.read((char*)&asistencias[i].idCliente, sizeof(int));
-        archibinrd.read((char*)&asistencias[i].cantInscriptos, sizeof(int));
-
-        asistencias[i].CursosInscriptos = new Inscripcion[asistencias[i].cantInscriptos];
-
-        archibinrd.read((char*)asistencias[i].CursosInscriptos, sizeof(Inscripcion) * asistencias[i].cantInscriptos);
-    }
-
-    archibinrd.close();
-
-    return asistencias;
-}
