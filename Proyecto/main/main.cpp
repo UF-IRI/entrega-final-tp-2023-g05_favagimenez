@@ -8,13 +8,14 @@ int main() {
 
     ifstream archivobinario;
   archivobinario.open("asistencia.dat", ios::binary);
-  leerAsistencias("asistencias.dat");
+//  leerAsistencias("asistencias.dat");
 
    //ABRO ARCHIVO CLASES
    ifstream archivo_clase;
-   archivo_clase.open("iriClasesGYM.csv", ios::out);
+   archivo_clase.open("../iriClasesGYM.csv");
    //int cantidadClases;
    int N=0;
+   cout<<"hola";
    Clases*clase=new Clases[N];
    leerClases(archivo_clase,clase,N);
 

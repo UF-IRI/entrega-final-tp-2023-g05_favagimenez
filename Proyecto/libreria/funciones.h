@@ -35,16 +35,16 @@ typedef struct {
     Inscripcion* CursosInscriptos;
 } sAsistencia;
 
-void registrarCliente(Cliente*& listaClientes, int* tamactual, Cliente nuevoCliente);
-void agregar_clases(Clases*&lista_clases, Clases *clase, int*tamactual);
+void registrarCliente(Cliente*& listaClientes, int &N);
+void agregar_clases(Clases*& clase, int& N);
 Clases*read_archivo_clases(string a1, int*contador);
-Cliente* guardarCliente(string archivo, int* cantidadClientes);
+void leercliente(string archivo, int* cantidadClientes);
 time_t obtenerFechaHora();
 void leerAsistencias(string archibinrd);
 void reseteararchivo(string rutaarchi, time_t fechadereset);
 void resetearbinario(string rutaarchi, tm* fechadereset);
 Clases* leerClase(string archivo, int* cantidadClases);
-void leerClases(ifstream &archi, Clases* &clase, int &tamC);
+void leerClases(ifstream& archi, Clases* &clase, int &tamC);
 bool existeSuperposicion(Cliente* cliente, Clases*clase);
 //void reservarClase(Clases*& listaClases, string& nombreClase, int horario, int& cantidadClases);
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase);
