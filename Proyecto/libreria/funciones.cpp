@@ -82,7 +82,7 @@ void leerClases(ifstream &archi, Clases* &clase, int &tamC){
 
         getline(archi, linea);
 
-        while(!archi.eof() && getline(archi, linea)){
+        while(archi.good()){
 
             s<<linea;
 
@@ -98,7 +98,9 @@ void leerClases(ifstream &archi, Clases* &clase, int &tamC){
 
         }
     }
+    delete[]clasess;
 }
+
 Cliente* guardarCliente(string archivo, int* cantidadClientes) {
     Cliente* listaCliente=new Cliente[0];
     *cantidadClientes=0;

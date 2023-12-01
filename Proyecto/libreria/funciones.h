@@ -34,6 +34,7 @@ typedef struct {
 
     Inscripcion* CursosInscriptos;
 } sAsistencia;
+
 void registrarCliente(Cliente*& listaClientes, int* tamactual, Cliente nuevoCliente);
 void agregar_clases(Clases*&lista_clases, Clases *clase, int*tamactual);
 Clases*read_archivo_clases(string a1, int*contador);
