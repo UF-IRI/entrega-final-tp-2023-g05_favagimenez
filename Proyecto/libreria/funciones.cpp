@@ -189,9 +189,10 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
         if(cliente[i].clases->horario==clase->horario){
             return true;
         }
+        else
+            return false;
 
     }
-    return false;
 }
 /*void filtrar_clase(Cliente* cliente, int*tamactual)
 {
