@@ -34,7 +34,7 @@ cliente.telefono = "123456789";
 cliente.fechaNac = "01/01/2000";
 cliente.estado = 1;
 
-// Creamos clases de prueba
+// Creamos clases
 Clases clases[2] = {
     {1, "Clase1", 10.5, 20, 30},
     {2, "Clase2", 15.5, 25, 35}
@@ -63,7 +63,7 @@ cliente.telefono = "987654321";
 cliente.fechaNac = "02/02/2002";
 cliente.estado = 1;
 
-// Creamos clases de prueba
+// Creamos clases
 Clases clases[2] = {
     {3, "Clase3", 12.5, 22, 32},
     {4, "Clase4", 17.5, 27, 37}

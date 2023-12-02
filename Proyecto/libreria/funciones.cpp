@@ -17,6 +17,7 @@ void registrarCliente(Cliente*& listaClientes, int& N) {
     listaClientes=aux;
 }
 void agregar_clases(Clases*& clase, int& N){
+
     N=N+1;
     Clases* aux= new Clases[N];
     for(int i=0; i<N-1;i++)
@@ -49,44 +50,59 @@ void leerAsistencias(string archibinrd) {
         cout<<"Error al leer archivo";
     f.close();
 }
-/*Clases* leerClase(string archivo, int* cantidadClases) {
-    Clases* listaClases = nullptr;
-    *cantidadClases = 0;
 
-    ifstream infile("iriClasesGYM.csv");
-    if (!infile.is_open()) {
-        cout << "Error al leer archivo de clientes";
-        return nullptr;
-    }
-    string line;
-    char coma = ',';
-    getline(infile, line);
-    while (getline(infile, line)) {
-        stringstream ss;
-        Clases nuevaClase;
-        ss>>nuevaClase.idClase;
-        getline(ss, nuevaClase.nombre, coma);
-        ss>>nuevaClase.horario;
-        agregar_clases(listaClases, &nuevaClase, cantidadClases);
-    }
-    infile.close();
-    return listaClases;
-}*/
 void leerClases(ifstream& archi, Clases* &clase, int &tamC){
-    string linea;
+    if(!archi.is_open())
+    {
+        cout<<"No se pudo abrir el archivo";
+    }
+
+
+    stringstream ss;
+    string encabezado;
+    string auxiliarlinea;
+    char delimiter=',';
+    string auxIdClase;
+    string auxNombreClase;
+    string auxHorario;
+
+
+    getline(archi,encabezado);
+
+
+    while(!archi.eof() && getline(archi,auxiliarlinea))
+    {
+
+        agregar_clases(clase,tamC);
+        ss.clear();
+        ss<<auxiliarlinea;
+        getline(ss,auxIdClase,delimiter);
+        clase[tamC-1].idClase=stoi(auxIdClase);
+        getline(ss,auxNombreClase,delimiter);
+        clase[tamC-1].nombre=auxNombreClase;
+        getline(ss,auxHorario,delimiter);
+        clase[tamC-1].horario=stof(auxHorario);
+        cout<<auxIdClase<<delimiter<<auxNombreClase<<delimiter<<auxHorario<<endl;
+    }
+
+   /* string linea;
     stringstream s;
 
-    archi.open("../iriClasesGYM.csv");
 
+    cout<<"Estoy en leer clase";
     if(archi.is_open()){
 
         getline(archi, linea);
-
-        while(archi){
-
+        if(archi.eof()){
+            cout<<"Llegue a fin del archivo";
+        }
+        while(!archi.eof()){
+            cout<<"Estoy en el while";
+            getline(s,linea,archi);
+            cout<<linea;
             s<<linea;
             agregar_clases(clase,tamC);
-
+            s.clear();
             getline(s, linea, ',');
             clase[tamC-1].idClase = stoi(linea);
             getline(s,linea, ',');
@@ -98,7 +114,7 @@ void leerClases(ifstream& archi, Clases* &clase, int &tamC){
             cout<<linea<<endl;
 
         }
-    }
+    }*/
 
 }
 
@@ -194,6 +210,7 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
 
     }
 }
+
 /*void filtrar_clase(Cliente* cliente, int*tamactual)
 {
     for(int i=0;i<*tamactual;i++)

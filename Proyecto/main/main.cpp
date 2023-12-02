@@ -8,20 +8,19 @@ int main() {
 
     ifstream archivobinario;
   archivobinario.open("asistencia.dat", ios::binary);
-//  leerAsistencias("asistencias.dat");
+ leerAsistencias("asistencias.dat");
 
    //ABRO ARCHIVO CLASES
    ifstream archivo_clase;
-   archivo_clase.open("../iriClasesGYM.csv");
+   archivo_clase.open("iriClasesGYM.csv");
    //int cantidadClases;
    int N=0;
-   cout<<"hola";
    Clases*clase=new Clases[N];
    leerClases(archivo_clase,clase,N);
 
    //ABRIR ARCHIVO CLIENTE
    //ifstream archivo_cliente;
-  // archivo_cliente.open("iriClientesGYM.csv", ios::out);
+  // archivo_cliente.open("iriClientesGYM.csv", ios);
   // Cliente*cliente;
   // int cantclientes=0;
   // cliente=guardarCliente("iriClientesGYM.csv", &cantclientes);
