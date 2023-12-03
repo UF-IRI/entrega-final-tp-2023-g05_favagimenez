@@ -85,72 +85,53 @@ void leerClases(ifstream& archi, Clases* &clase, int &tamC){
         cout<<auxIdClase<<delimiter<<auxNombreClase<<delimiter<<auxHorario<<endl;
     }
 
-   /* string linea;
-    stringstream s;
-
-
-    cout<<"Estoy en leer clase";
-    if(archi.is_open()){
-
-        getline(archi, linea);
-        if(archi.eof()){
-            cout<<"Llegue a fin del archivo";
-        }
-        while(!archi.eof()){
-            cout<<"Estoy en el while";
-            getline(s,linea,archi);
-            cout<<linea;
-            s<<linea;
-            agregar_clases(clase,tamC);
-            s.clear();
-            getline(s, linea, ',');
-            clase[tamC-1].idClase = stoi(linea);
-            getline(s,linea, ',');
-            clase[tamC-1].nombre=linea[1];
-            getline(s, linea, ',');
-            clase[tamC-1].horario=stof(linea);
-            getline(s, linea);
-
-            cout<<linea<<endl;
-
-        }
-    }*/
-
 }
 
 void leercliente(ifstream& archi, Cliente* &cliente, int &tamC) {
-    string linea;
-    stringstream s;
+    if(!archi.is_open())
+    {
+        cout<<"No se pudo abrir el archivo";
+    }
 
-    archi.open("../iriClientesGYM.csv");
 
-    if(archi.is_open()){
+    stringstream ss;
+    string encabezado;
+    string auxiliarlinea;
+    char coma=',';
+    string auxIdCliente;
+    string auxNombre;
+    string auxApellido;
+    string auxEmail;
+    string auxTelefono;
+    string auxFechaNac;
+    string auxEstado;
 
-        getline(archi, linea);
 
-        while(archi){
+    getline(archi,encabezado);
 
-            s<<linea;
-            registrarCliente(cliente,tamC);
 
-            getline(s, linea, ',');
-            cliente[tamC-1].idCliente = stoi(linea);
-            getline(s,linea, ',');
-            cliente[tamC-1].nombre=linea[1];
-            getline(s, linea, ',');
-            cliente[tamC-1].apellido=linea[2];
-            getline(s, linea);
-            cliente[tamC-1].email=linea[3];
-             getline(s, linea);
-            cliente[tamC-1].telefono=linea[4];
-              getline(s, linea);
-            cliente[tamC-1].fechaNac=linea[5];
-              getline(s, linea);
-            cliente[tamC-1].estado=stoi(linea);
-               getline(s, linea);
-            cout<<linea<<endl;
+    while(!archi.eof() && getline(archi,auxiliarlinea))
+    {
 
-        }
+        registrarCliente(cliente,tamC);
+        ss.clear();
+        ss<<auxiliarlinea;
+        getline(ss,auxIdCliente,coma);
+        cliente[tamC-1].idCliente=stoi(auxIdCliente);
+        getline(ss,auxNombre,coma);
+        cliente[tamC-1].nombre=auxNombre;
+        getline(ss,auxApellido,coma);
+        cliente[tamC-1].apellido=auxApellido;
+        getline(ss,auxEmail,coma);
+        cliente[tamC-1].email=auxEmail;
+        getline(ss,auxTelefono,coma);
+        cliente[tamC-1].telefono=auxTelefono;
+        getline(ss,auxFechaNac,coma);
+        cliente[tamC-1].fechaNac=auxFechaNac;
+        getline(ss,auxEstado,coma);
+        cliente[tamC-1].estado=stoi(auxEstado);
+
+        cout<<auxIdCliente<<coma<<auxNombre<<coma<<auxApellido<<coma<<auxEmail<<coma<<auxTelefono<<coma<<auxFechaNac<<coma<<auxEstado<<endl;
     }
 }
 /*

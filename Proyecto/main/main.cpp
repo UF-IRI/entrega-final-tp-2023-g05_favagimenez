@@ -19,9 +19,11 @@ int main() {
    leerClases(archivo_clase,clase,N);
 
    //ABRIR ARCHIVO CLIENTE
-   //ifstream archivo_cliente;
-  // archivo_cliente.open("iriClientesGYM.csv", ios);
-  // Cliente*cliente;
+   ifstream archivo_cliente;
+  archivo_cliente.open("iriClientesGYM.csv");
+   int cantclientes=0;
+  Cliente*cliente=new Cliente[cantclientes];
+   leercliente(archivo_cliente,cliente,cantclientes);
   // int cantclientes=0;
   // cliente=guardarCliente("iriClientesGYM.csv", &cantclientes);
    //int cantidadClientes;

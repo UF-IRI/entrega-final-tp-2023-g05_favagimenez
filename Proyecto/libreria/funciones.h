@@ -38,7 +38,7 @@ typedef struct {
 void registrarCliente(Cliente*& listaClientes, int &N);
 void agregar_clases(Clases*& clase, int& N);
 Clases*read_archivo_clases(string a1, int*contador);
-void leercliente(string archivo, int* cantidadClientes);
+void leercliente(ifstream& archi, Cliente* &cliente, int &tamC);
 time_t obtenerFechaHora();
 void leerAsistencias(string archibinrd);
 void reseteararchivo(string rutaarchi, time_t fechadereset);
