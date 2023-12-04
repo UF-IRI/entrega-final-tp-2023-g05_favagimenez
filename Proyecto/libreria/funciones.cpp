@@ -28,6 +28,7 @@ void agregar_clases(Clases*& clase, int& N){
     delete[] clase;
     clase=aux;
 }
+
 void leerAsistencias(string archibinrd) {
    ifstream f(archibinrd, ios::out | ios::binary);
 
@@ -134,13 +135,16 @@ void leercliente(ifstream& archi, Cliente* &cliente, int &tamC) {
         cout<<auxIdCliente<<coma<<auxNombre<<coma<<auxApellido<<coma<<auxEmail<<coma<<auxTelefono<<coma<<auxFechaNac<<coma<<auxEstado<<endl;
     }
 }
-/*
+
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
-    if(!existeSuperposicion(cliente, clase)){ //aca no recorremos en esta funcion porque al llamar la funcion existe superposicion, esa funcion recorre la lista de clases del cliente
+    int N=*(cliente->cantClases);
+    if(!existeSuperposicion(cliente, clase) && !esta_clase(cliente->clases,clase->idClase,N)){ //aca no recorremos en esta funcion porque al llamar la funcion existe superposicion, esa funcion recorre la lista de clases del cliente, llamo a la funcion booleana esta clases, si no esta la clase
         if(clase->cupo<clase->cupoMax){
             cout<<"Se pudo reservar";
              cliente->cantClases++;
-            agregar_clases(cliente->clases,clase, cliente->cantClases);
+            int N=*(cliente->cantClases);
+            agregar_clases(cliente->clases,N); //llamo el resize y agrando el tamano +1
+            cliente->clases[N-1]=*clase; //en el ultimo espacio agrego la clase
             clase->cupo++;
             Inscripcion*nuevainscripcion;
             nuevainscripcion->fechaInscripcion=obtenerFechaHora();
@@ -150,12 +154,12 @@ Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
         }
     }
     return nullptr;
-}*/
+}
 time_t obtenerFechaHora()
 {
 
 time_t auxiliar_fecha = time(0);
-//
+
 return auxiliar_fecha;
 }
 void reseteararchivo(string rutaarchi, tm* fechadereset){
@@ -192,11 +196,33 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
     }
 }
 
-/*void filtrar_clase(Cliente* cliente, int*tamactual)
+void filtrar_clase(Cliente* cliente, int &tamactual)
 {
-    for(int i=0;i<*tamactual;i++)
-    {
-        int id_clase=cliente[i].clases->idClase;
-    }
-}*/
+    Clases*arrayaux=new Clases[0];
+    int N=0;
 
+    for(int i=0;i<tamactual;i++)
+    {
+        Clases claseaux=cliente->clases[i];
+        if(!esta_clase(arrayaux,claseaux.idClase,N)){ //si la clase no esta lo inserto
+            agregar_clases(arrayaux,N);
+            arrayaux[N]=claseaux;
+        }
+
+    }  //actualizo las clases del cliente con el arreglo filtrado
+    cliente->clases=arrayaux;
+    cliente->cantClases=&N;
+}
+bool esta_clase(Clases*clases, int id, int tam){
+    bool toR=false;
+    int i=0;
+    while(i<tam&&!toR){
+        if(clases[i].idClase==id){
+            toR=true;
+
+        }
+        else
+            i++;
+    }
+    return toR;
+}

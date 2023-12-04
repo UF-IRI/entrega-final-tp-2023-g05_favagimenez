@@ -46,8 +46,8 @@ void resetearbinario(string rutaarchi, tm* fechadereset);
 Clases* leerClase(string archivo, int* cantidadClases);
 void leerClases(ifstream& archi, Clases* &clase, int &tamC);
 bool existeSuperposicion(Cliente* cliente, Clases*clase);
-//void reservarClase(Clases*& listaClases, string& nombreClase, int horario, int& cantidadClases);
+void filtrar_clase(Cliente* cliente, int &tamactual);
 Inscripcion*reservarClase(Cliente*cliente, Clases*clase);
 void regenerarArchivo();
-
+bool esta_clase(Clases*clases, int id,int tam);
 #endif //FUNCIONES_H

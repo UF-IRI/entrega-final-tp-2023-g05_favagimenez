@@ -24,21 +24,15 @@ int main() {
    int cantclientes=0;
   Cliente*cliente=new Cliente[cantclientes];
    leercliente(archivo_cliente,cliente,cantclientes);
-  // int cantclientes=0;
-  // cliente=guardarCliente("iriClientesGYM.csv", &cantclientes);
-   //int cantidadClientes;
-   //Cliente* listaClientes = guardarCliente("iriClientesGYM.csv", &cantidadClientes);
+  cout<<"ver que onda";
+  /*for(int i=0;i<cantclientes;i++){
+      cout<<"\nFiltrar clase";
+       Cliente aux=cliente[i];
+      int N=*(aux.cantClases);
+       cout<<"Estoy filtrando";
+     //filtrar_clase(&aux,N);
+   }*/
 
-//
-    /*int cantAsistencias;
-    sAsistencia* asistencias = leerArchivoBinario("asistencias_1697673600000.dat", &cantAsistencias);
-    // "../gngng/
-    int cantidadClientes=0;
-    @@ -36,12 +71,41 @@ int main() {
-  //  Clases* listaClases = cargarClases("iriClasesGYM", cantidadClases);
-    //delete[] listaClases;*/
-
-    cout << "Hola mundo!"<<endl;
     return 0;
 }
 

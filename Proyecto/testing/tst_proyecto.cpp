@@ -80,3 +80,4 @@ REQUIRE(existeSuperposicion(&cliente, &clasePrueba) == false);
 // Liberamos la memoria asignada dinámicamente.
 delete cliente.cantClases;
 }
+
