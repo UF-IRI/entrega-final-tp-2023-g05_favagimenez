@@ -15,24 +15,25 @@ int main() {
    archivo_clase.open("iriClasesGYM.csv");
    //int cantidadClases;
    int N=0;
-   Clases*clase=new Clases[N];
-   leerClases(archivo_clase,clase,N);
+   Clases*lista_clases=new Clases[N];
+   leerClases(archivo_clase,lista_clases,N);
 
    //ABRIR ARCHIVO CLIENTE
    ifstream archivo_cliente;
   archivo_cliente.open("iriClientesGYM.csv");
    int cantclientes=0;
-  Cliente*cliente=new Cliente[cantclientes];
-   leercliente(archivo_cliente,cliente,cantclientes);
-  cout<<"ver que onda";
-  /*for(int i=0;i<cantclientes;i++){
-      cout<<"\nFiltrar clase";
+  Cliente*lista_clientes=new Cliente[cantclientes];
+   leercliente(archivo_cliente,lista_clientes,cantclientes);
+  cout<<"ver que onda"<<endl;
+   /*
+  for(int i=0;i<cantclientes;i++){
+      cout<<"Filtrar clase"<<endl;
        Cliente aux=cliente[i];
-      int N=*(aux.cantClases);
-       cout<<"Estoy filtrando";
-     //filtrar_clase(&aux,N);
-   }*/
-
+      int N1=*(aux.cantClases);
+       cout<<"Estoy filtrando"<<endl;
+     filtrar_clase(&aux,N1);
+   }
+*/
     return 0;
 }
 

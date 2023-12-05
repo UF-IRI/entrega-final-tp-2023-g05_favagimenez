@@ -198,7 +198,7 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
 
 void filtrar_clase(Cliente* cliente, int &tamactual)
 {
-    Clases*arrayaux=new Clases[0];
+    Clases*arrayaux=new Clases[tamactual];
     int N=0;
 
     for(int i=0;i<tamactual;i++)
@@ -210,8 +210,24 @@ void filtrar_clase(Cliente* cliente, int &tamactual)
         }
 
     }  //actualizo las clases del cliente con el arreglo filtrado
-    cliente->clases=arrayaux;
-    cliente->cantClases=&N;
+    // Liberar la memoria del array antiguo
+    delete[] cliente->clases;
+
+    // Actualizar las clases del cliente con el array filtrado
+    if (N > 0)
+    {
+        cout<<"Hola";
+        cliente->clases = arrayaux;
+        cliente->cantClases = &N;
+    }
+    else
+    {
+        // Si N es igual a 0, el cliente no tiene clases
+        cliente->clases = nullptr;
+        cliente->cantClases = &N;
+    }
+    /*cliente->clases=arrayaux;
+    cliente->cantClases=&N;*/
 }
 bool esta_clase(Clases*clases, int id, int tam){
     bool toR=false;
