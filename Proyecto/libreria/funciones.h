@@ -33,7 +33,7 @@ typedef struct {
     unsigned int idCliente, cantInscriptos;
     Inscripcion* CursosInscriptos;
 } sAsistencia;
-void RandCliente(Cliente*& ListaClientes,int& Nclases,int& Nclientes, Clases*& ListaClase, sAsistencia*& aux);
+
 void registrarCliente(Cliente*& listaClientes, int &N);
 void agregar_clases(Clases*& clase, int& N);
 Clases*read_archivo_clases(string a1, int*contador);
@@ -44,12 +44,11 @@ void reseteararchivo(string rutaarchi, tm* fechadereset);
 void resetearbinario(string rutaarchi, tm* fechadereset);
 void leerClases(ifstream& archi, Clases* &clase, int &tamC);
 bool existeSuperposicion(Cliente* cliente, Clases*clase);
-void filtrar_clase(Cliente* cliente, int &tamactual);
 bool esta_clase(Clases*clases, int id,int tam);
 void Reserva(Cliente* cliente ,Clases* clase,sAsistencia* asistPrevia,int &n);
 int existeidcliente(Cliente*& lista_clientes, int cantclientes, int id);
 bool VerificarClase (Clases* clase);
 void AgregarClienteArchivoInscri(Cliente*& cliente, sAsistencia*& asistPrev, int& n,int idCurso);
 void insertar_clase(int idClase, int idCliente, Cliente*lista_cliente, Clases*lista_clases,int tamlistacliente, int tamlistaclase);
-Cliente* randomcliente(Cliente *cliente, int numClientes);
+
 #endif //FUNCIONES_H

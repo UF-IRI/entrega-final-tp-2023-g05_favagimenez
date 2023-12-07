@@ -242,19 +242,7 @@ bool esta_clase(Clases*clases, int id, int tam){
     return toR;
 }
 
-Cliente* randomcliente(Cliente *cliente, int numClientes){
-    if (numClientes <= 0) {
-        return nullptr;  // No hay clientes disponibles
-    }
 
-    int ClienteAleatorio = rand() % 250;
-
-    Cliente& CleinteSeleccionado = cliente[ClienteAleatorio];
-    Cliente* punteroSCliente = new Cliente{CleinteSeleccionado.idCliente, CleinteSeleccionado.nombre, CleinteSeleccionado.apellido, CleinteSeleccionado.email ,CleinteSeleccionado.telefono, CleinteSeleccionado.fechaNac, CleinteSeleccionado.estado};
-    return punteroSCliente;
-
-    return punteroSCliente;
-}
 int existeidcliente(Cliente*& lista_clientes, int cantclientes, int id)
 {
     int i;
