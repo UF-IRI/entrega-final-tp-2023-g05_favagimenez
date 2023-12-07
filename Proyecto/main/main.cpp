@@ -57,15 +57,17 @@ int main() {
     //PARA RESERVAR CLASE
 
     int PersonasAInscribirse=5;
- if(existeidcliente(lista_clientes,cantclientes,lista_clientes->idCliente)){
-    for(int i=0 ; i<PersonasAInscribirse;i++){
 
-        Cliente* clienteActual=&lista_clientes[0];
+    for(int i=0 ; i<PersonasAInscribirse;i++){
+        if(existeidcliente(lista_clientes,cantclientes,lista_clientes->idCliente)){
+      Cliente* clienteActual=&lista_clientes[0];
+
         Clases* ClaseElegida=&lista_clases[0];
+
         Reserva(clienteActual,ClaseElegida,arrayasistencia,cantasistencia);
 
-        std::cout<<"La Reserva fue exitosa, para el cliente con id:"<<clienteActual->idCliente<<"Para la clase"<<ClaseElegida->nombre<<"a las"<<ClaseElegida->horario<< endl;
-    }
+        cout<<"La Reserva fue exitosa, para el cliente con id:"<<clienteActual->idCliente<<"Para la clase"<<ClaseElegida->nombre<<"a las"<<ClaseElegida->horario<< endl;
+        }
     }
     time_t now = time(0);
     tm* today = localtime(&now);
