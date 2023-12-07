@@ -57,7 +57,7 @@ int main() {
     //PARA RESERVAR CLASE
 
     int PersonasAInscribirse=5;
- if(existeidcliente(lista_clientes,cantclientes,lista_clientes->idCliente)&&!existeSuperposicion(lista_clientes,lista_clases)){
+ if(existeidcliente(lista_clientes,cantclientes,lista_clientes->idCliente)){
     for(int i=0 ; i<PersonasAInscribirse;i++){
 
         Cliente* clienteActual=&lista_clientes[0];

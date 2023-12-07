@@ -258,7 +258,7 @@ void AgregarClienteArchivoInscri(Cliente*& cliente, sAsistencia*& asistPrev, int
     int cont=0;
     for (int i=0;i<n;i++) //si esta el cliente subido con otra clase
     {
-        if(asistPrev[i].idCliente==cliente->idCliente){ // Verifica si el cliente ya está inscripto en otra clase
+        if(asistPrev[i].idCliente==cliente->idCliente){ // Verifica si el cliente ya está inscripto
             cont++;
              // Incrementar la cantidad de cursos inscriptos para este cliente
             asistPrev[i].cantInscriptos=asistPrev[i].cantInscriptos+1;
