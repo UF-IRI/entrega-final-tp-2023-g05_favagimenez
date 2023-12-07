@@ -28,29 +28,71 @@ void agregar_clases(Clases*& clase, int& N){
     delete[] clase;
     clase=aux;
 }
+void resizeAsistencia(sAsistencia*& asistencias, int& N)
+{
+    N=N+1;
+    sAsistencia* aux= new sAsistencia[N];
+    for(int i=0; i<N-1;i++)
+    {
+        aux[i]=asistencias[i];
+    }
+    delete[] asistencias;
+    asistencias=aux;
+}
+void resizeInscripcion(Inscripcion*& inscripciones, int& N)
+{
+    N=N+1;
+    Inscripcion* aux= new Inscripcion[N];
+    for(int i=0; i<N-1;i++)
+    {
+        aux[i]=inscripciones[i];
+    }
+    delete[] inscripciones;
+    inscripciones=aux;
+}
+sAsistencia* leerAsistencias(string archibinrd) {
+      sAsistencia* lista_asistencia=new sAsistencia[1000];
 
-void leerAsistencias(string archibinrd) {
+      int i=0;
    ifstream f(archibinrd, ios::out | ios::binary);
-
+  //  cout<<"vqer"<<endl;
     cout<<archibinrd;
     if (f.is_open()) {
 
         sAsistencia asistencia;
+
         while (f.read((char*)&asistencia, sizeof(sAsistencia))) {
+
+
             cout << "ID del cliente: " << asistencia.idCliente << endl;
             cout << "Cantidad de cursos a los que se inscribio: "<< asistencia.cantInscriptos << endl;
+
+          int cantinscriptos=0;
+            Inscripcion*lista_inscripciones=new Inscripcion[1000];
             for (int i = 0; i < asistencia.cantInscriptos; i++) {
                 Inscripcion inscripcion;
                 f.read((char*)&inscripcion, sizeof(Inscripcion));
                 cout << "ID clase: " << inscripcion.idClase<< endl;
                 cout << "Fecha de inscripcion: "<< inscripcion.fechaInscripcion << endl;
+                lista_inscripciones[i]=inscripcion;
+
             }
+
+            asistencia.CursosInscriptos=lista_inscripciones;
+            lista_asistencia[i++]=asistencia;
+
+
         }
     }
     else
         cout<<"Error al leer archivo";
+
     f.close();
+
+    return lista_asistencia;
 }
+
+
 
 void leerClases(ifstream& archi, Clases* &clase, int &tamC){
     if(!archi.is_open())
@@ -132,29 +174,16 @@ void leercliente(ifstream& archi, Cliente* &cliente, int &tamC) {
         getline(ss,auxEstado,coma);
         cliente[tamC-1].estado=stoi(auxEstado);
 
+        cliente[tamC-1].clases= new Clases[0]; //inicializar la lista en 0
+        int N=0;
+        cliente[tamC-1].cantClases=&N;
         cout<<auxIdCliente<<coma<<auxNombre<<coma<<auxApellido<<coma<<auxEmail<<coma<<auxTelefono<<coma<<auxFechaNac<<coma<<auxEstado<<endl;
     }
+
+
 }
 
-Inscripcion*reservarClase(Cliente*cliente, Clases*clase){
-    int N=*(cliente->cantClases);
-    if(!existeSuperposicion(cliente, clase) && !esta_clase(cliente->clases,clase->idClase,N)){ //aca no recorremos en esta funcion porque al llamar la funcion existe superposicion, esa funcion recorre la lista de clases del cliente, llamo a la funcion booleana esta clases, si no esta la clase
-        if(clase->cupo<clase->cupoMax){
-            cout<<"Se pudo reservar";
-             cliente->cantClases++;
-            int N=*(cliente->cantClases);
-            agregar_clases(cliente->clases,N); //llamo el resize y agrando el tamano +1
-            cliente->clases[N-1]=*clase; //en el ultimo espacio agrego la clase
-            clase->cupo++;
-            Inscripcion*nuevainscripcion;
-            nuevainscripcion->fechaInscripcion=obtenerFechaHora();
-            nuevainscripcion->idClase=clase->idClase;
-            nuevainscripcion->idCliente=cliente->idCliente;
-            return nuevainscripcion;
-        }
-    }
-    return nullptr;
-}
+
 time_t obtenerFechaHora()
 {
 
@@ -169,7 +198,7 @@ void reseteararchivo(string rutaarchi, tm* fechadereset){
     {
         ofstream ofs;
         ofs.open("iriClientes.csv", ofstream::out | ofstream::trunc);
-        fechadereset=hoy;
+        *fechadereset=*hoy;
         ofs.close();
     }
 }
@@ -180,7 +209,7 @@ void resetearbinario(string rutaarchi, tm* fechadereset){
     {
         ofstream ofs;
         ofs.open("asistencia.dat", ofstream::out | ofstream::trunc);
-        fechadereset=hoy;
+        *fechadereset=*hoy;
         ofs.close();
     }
 }
@@ -196,39 +225,7 @@ bool existeSuperposicion(Cliente* cliente, Clases*clase){
     }
 }
 
-void filtrar_clase(Cliente* cliente, int &tamactual)
-{
-    Clases*arrayaux=new Clases[tamactual];
-    int N=0;
 
-    for(int i=0;i<tamactual;i++)
-    {
-        Clases claseaux=cliente->clases[i];
-        if(!esta_clase(arrayaux,claseaux.idClase,N)){ //si la clase no esta lo inserto
-            agregar_clases(arrayaux,N);
-            arrayaux[N]=claseaux;
-        }
-
-    }  //actualizo las clases del cliente con el arreglo filtrado
-    // Liberar la memoria del array antiguo
-    delete[] cliente->clases;
-
-    // Actualizar las clases del cliente con el array filtrado
-    if (N > 0)
-    {
-        cout<<"Hola";
-        cliente->clases = arrayaux;
-        cliente->cantClases = &N;
-    }
-    else
-    {
-        // Si N es igual a 0, el cliente no tiene clases
-        cliente->clases = nullptr;
-        cliente->cantClases = &N;
-    }
-    /*cliente->clases=arrayaux;
-    cliente->cantClases=&N;*/
-}
 bool esta_clase(Clases*clases, int id, int tam){
     bool toR=false;
     int i=0;
@@ -241,4 +238,97 @@ bool esta_clase(Clases*clases, int id, int tam){
             i++;
     }
     return toR;
+}
+
+
+int existeidcliente(Cliente*& lista_clientes, int cantclientes, int id)
+{
+    int i;
+    for(i=0; i<cantclientes; i++)
+    {
+        if(lista_clientes[i].idCliente == id)
+            return 1; //se encontro, por lo tanto existe id
+    }
+    return -1; //no se encontro, por lo tanto no esta inscripto
+}
+
+
+
+void AgregarClienteArchivoInscri(Cliente*& cliente, sAsistencia*& asistPrev, int& n,int idCurso){
+    int cont=0;
+    for (int i=0;i<n;i++) //si esta el cliente subido con otra clase
+    {
+        if(asistPrev[i].idCliente==cliente->idCliente){ // Verifica si el cliente ya está inscripto en otra clase
+            cont++;
+             // Incrementar la cantidad de cursos inscriptos para este cliente
+            asistPrev[i].cantInscriptos=asistPrev[i].cantInscriptos+1;
+
+            // Asignar memoria para el nuevo curso inscripto
+            asistPrev[i].CursosInscriptos = new Inscripcion[asistPrev[i].cantInscriptos];
+
+            // Asignar la fecha de inscripción y el ID del curso al nuevo curso inscripto
+            asistPrev[i].CursosInscriptos[asistPrev[i].cantInscriptos - 1].fechaInscripcion = time(0);
+            asistPrev[i].CursosInscriptos[asistPrev[i].cantInscriptos - 1].idClase = idCurso;
+        }
+
+    }
+    if (cont==0){
+        // No se encontró al cliente inscrito en ninguna clase anterior
+
+        // Realizar un resize para darle lugar en memoria
+        int N;
+        N=(n)+1;
+        sAsistencia *aux= new sAsistencia [N];
+        // Copiar los elementos anteriores a la nueva memoria
+        for(int i=0;i<N-1;i++){
+            aux [i]= asistPrev [ i ];
+        }
+        aux[N-1].cantInscriptos=1;
+
+        // Asignar memoria para el nuevo curso inscripto
+        aux[N-1].CursosInscriptos = new Inscripcion[aux[N-1].cantInscriptos];
+
+        // Asignar la fecha de inscripción y el ID del curso al nuevo curso inscripto
+        aux[N-1].CursosInscriptos[aux[N-1].cantInscriptos - 1].fechaInscripcion = time(0);
+        aux[N-1].CursosInscriptos[aux[N-1].cantInscriptos - 1].idClase = idCurso;
+//liberar memoria
+        delete [ ] asistPrev;
+        asistPrev = aux;
+    }
+}
+bool VerificarClase (Clases* clase){ //verifico que exista la clase a reservar
+    if(clase==nullptr)
+        return false;
+    else if (clase->nombre != "Spinning" && clase->nombre != "Yoga" && clase->nombre != "Pilates"  && clase->nombre != "Stretching" && clase->nombre !="Zumba" && clase->nombre!="Boxeo" && clase->nombre !="Musculacion"){
+        //clase invalida
+        return false;
+    }
+    return true;
+}
+void Reserva(Cliente* cliente ,Clases* clase,sAsistencia* asistPrevia,int &n){
+
+    bool ok=VerificarClase(clase);
+    if(ok==false) {
+
+        cout<<"Informacion invalida"<<endl;
+    }
+    //datos correctos
+
+    //verificar espacio disp
+    if(clase->cupo==clase->cupoMax){
+        //no hay mas lugar
+        cout<<"Cupo lleno"<<endl;
+    }
+    else if(clase->cupo<clase->cupoMax){
+    //tengo lugar
+
+
+        if (existeSuperposicion(cliente,clase)){
+            cout<<"se superpone"<<endl;}
+
+    //si esta todo en orden entonces:
+    AgregarClienteArchivoInscri(cliente, asistPrevia,n,clase->idClase); //lo agrego
+    clase->cupo=clase->cupo+1; //incremento cupo
+    }
+
 }

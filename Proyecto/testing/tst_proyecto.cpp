@@ -90,14 +90,13 @@ REQUIRE(esta_clase(clases1, 1, 2) == true);
 Clases clases2[] = {{3, "Clase3", 9.0,15, 25}, {4, "Clase4", 12.5,30, 40}};
 REQUIRE(esta_clase(clases2, 2, 2) == false);
 }
-/*
+TEST_CASE("VerificarClase") {
+SECTION("Clase válida") {
+Clases clase;
+clase.nombre = "Yoga";  // Supongamos una clase válida
 
-TEST_CASE("Prueba de filtrar_clase") {
-// Caso de prueba 1: Cliente con clases sin duplicados
-Clases clases1[] = {{1, "Clase1", 10.5, 20, 30}, {2, "Clase2", 15.0, 25, 35}};
-Cliente cliente1 = {1, "Nombre1", "Apellido1", "email1", "telefono1", "fechaNac1", 1, clases1, nullptr};
-int tamactual1 = 2;
-filtrar_clase(&cliente1, tamactual1);
-REQUIRE(cliente1.cantClases != nullptr);
-REQUIRE(*cliente1.cantClases == 2);
-}*/
+bool resultado = VerificarClase(&clase);
+
+REQUIRE(resultado == true);
+}}
+
